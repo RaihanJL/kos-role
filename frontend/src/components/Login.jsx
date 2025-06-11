@@ -11,7 +11,9 @@ const Login = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const location = useLocation();
-  const { user, isSuccess, isLoading } = useSelector((state) => state.auth);
+  const { user, isSuccess, isLoading, isError, message } = useSelector(
+    (state) => state.auth
+  );
 
   useEffect(() => {
     // Ambil error dari redirect hanya sekali saat mount
@@ -43,7 +45,15 @@ const Login = () => {
             <div className="columns is-centered">
               <div className="column is-4">
                 <form onSubmit={Auth} className="box">
-                  {redirectError && <p className="has-text-centered">{redirectError}</p>}
+                  {redirectError && (
+                    <p className="has-text-centered">{redirectError}</p>
+                  )}
+                  {/* Tambahkan baris ini untuk menampilkan error dari redux */}
+                  {isError && message && (
+                    <p className="has-text-centered has-text-danger">
+                      {message}
+                    </p>
+                  )}
                   <h1 className="title is-2 has-text-centered">Sign In</h1>
                   <div className="field">
                     <label className="label">Email</label>
