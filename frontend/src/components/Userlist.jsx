@@ -33,6 +33,8 @@ const Userlist = () => {
             <th>Name</th>
             <th>Email</th>
             <th>Role</th>
+            <th>Tipe Kamar</th>
+            <th>Harga Kamar</th>
             <th>Actions</th>
           </tr>
         </thead>
@@ -43,6 +45,14 @@ const Userlist = () => {
               <td>{user.name}</td>
               <td>{user.email}</td>
               <td>{user.role}</td>
+              <td>{user.role === "admin" ? "-" : user.roomType || "-"}</td>
+              <td>
+                {user.role === "admin"
+                  ? "-"
+                  : user.roomPrice
+                  ? `Rp${user.roomPrice.toLocaleString()}`
+                  : "-"}
+              </td>
               <td>
                 <Link
                   to={`/users/edit/${user.uuid}`}
@@ -53,6 +63,7 @@ const Userlist = () => {
                 <button
                   onClick={() => deleteUser(user.uuid)}
                   className="button is-small is-danger"
+                  style={{ marginLeft: 4 }}
                 >
                   Delete
                 </button>

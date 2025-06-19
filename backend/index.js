@@ -7,6 +7,10 @@ import SequelizeStore from "connect-session-sequelize";
 import UserRoute from "./routes/UserRoute.js";
 import ProductRoute from "./routes/ProductRoute.js";
 import AuthRoute from "./routes/AuthRoute.js";
+import PaymentRoute from "./routes/PaymentRoute.js";
+import "./scheduler/paymentReminder.js";
+import "./scheduler/generatePayments.js";
+import rulesRoute from "./routes/RulesRoute.js";
 
 dotenv.config();
 
@@ -35,15 +39,17 @@ app.use(
 
 app.use(
   cors({
+    origin: ["http://localhost:3000", "http://192.168.185.29:3000"],
     credentials: true,
-    origin: "http://localhost:3000",
   })
 );
 app.use(express.json());
+app.use(express.static("public"));
 app.use(UserRoute);
 app.use(ProductRoute);
 app.use(AuthRoute);
-
+app.use(PaymentRoute);
+app.use(rulesRoute);
 // store.sync();
 
 app.listen(process.env.APP_PORT, () => {

@@ -8,6 +8,8 @@ const FormAddUser = () => {
   const [password, setPassword] = useState("");
   const [confPassword, setConfPassword] = useState("");
   const [role, setRole] = useState("");
+  const [roomType, setRoomType] = useState("");
+  const [roomPrice, setRoomPrice] = useState(0);
   const [msg, setMsg] = useState("");
   const navigate = useNavigate();
 
@@ -16,11 +18,13 @@ const FormAddUser = () => {
     setMsg("");
     try {
       await axios.post("http://localhost:5000/users", {
-        name: name,
-        email: email,
-        password: password,
-        confPassword: confPassword,
-        role: role,
+        name,
+        email,
+        password,
+        confPassword,
+        role,
+        roomType,
+        roomPrice,
       });
       navigate("/users");
     } catch (error) {
@@ -85,6 +89,43 @@ const FormAddUser = () => {
                     value={confPassword}
                     onChange={(e) => setConfPassword(e.target.value)}
                     placeholder="*****"
+                  />
+                </div>
+              </div>
+              <div className="field">
+                <label className="label">Tipe Kamar</label>
+                <div className="control">
+                  <div className="select is-fullwidth">
+                    <select
+                      value={roomType}
+                      onChange={(e) => {
+                        setRoomType(e.target.value);
+                        // Otomatis set harga sesuai tipe kamar
+                        if (e.target.value === "kecil") setRoomPrice(1600000);
+                        else if (e.target.value === "sedang")
+                          setRoomPrice(1800000);
+                        else if (e.target.value === "besar")
+                          setRoomPrice(1900000);
+                        else setRoomPrice(0);
+                      }}
+                    >
+                      <option value="">Pilih Tipe Kamar</option>
+                      <option value="kecil">Kecil</option>
+                      <option value="sedang">Sedang</option>
+                      <option value="besar">Besar</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+              <div className="field">
+                <label className="label">Harga Kamar</label>
+                <div className="control">
+                  <input
+                    type="number"
+                    className="input"
+                    value={roomPrice}
+                    readOnly
+                    placeholder="Harga kamar"
                   />
                 </div>
               </div>

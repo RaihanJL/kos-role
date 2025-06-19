@@ -27,7 +27,7 @@ const User = db.define(
       allowNull: false,
       validate: {
         notEmpty: true,
-        isEmail: true, 
+        isEmail: true,
       },
     },
     password: {
@@ -39,11 +39,19 @@ const User = db.define(
     },
     role: {
       type: DataTypes.STRING,
-      allowNull: false, 
+      allowNull: false,
       validate: {
         notEmpty: true,
-        isIn: [['admin', 'user']], 
-      }
+        isIn: [["admin", "user"]],
+      },
+    },
+    roomType: {
+      type: DataTypes.ENUM("kecil", "sedang", "besar"),
+      allowNull: false,
+    },
+    roomPrice: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
     },
   },
   {

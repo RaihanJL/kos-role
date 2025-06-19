@@ -14,6 +14,7 @@ const Login = () => {
   const { user, isSuccess, isLoading, isError, message } = useSelector(
     (state) => state.auth
   );
+  
 
   useEffect(() => {
     // Ambil error dari redirect hanya sekali saat mount
@@ -78,6 +79,18 @@ const Login = () => {
                         placeholder="*****"
                       />
                     </div>
+                  </div>
+                  <div className="has-text-centered mt-2">
+                    <span>Belum punya akun? </span>
+                    <a
+                      href="#"
+                      onClick={(e) => {
+                        e.preventDefault();
+                        navigate("/register");
+                      }}
+                    >
+                      Daftar di sini
+                    </a>
                   </div>
                   <div className="field mt-5">
                     <button

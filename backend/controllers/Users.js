@@ -1,12 +1,20 @@
 import User from "../models/UserModel.js";
 import argon2 from "argon2";
 
+// Contoh di Express + Sequelize
 export const getUsers = async (req, res) => {
   try {
-    const response = await User.findAll({
-      attributes: ["uuid", "name", "email", "role"],
+    const users = await User.findAll({
+      attributes: [
+        "uuid",
+        "name",
+        "email",
+        "role",
+        "roomType",
+        "roomPrice"
+      ]
     });
-    res.status(200).json(response);
+    res.json(users);
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
@@ -29,18 +37,36 @@ export const getUserById = async (req, res) => {
   }
 };
 export const createUser = async (req, res) => {
-  const { name, email, password, confPassword, role } = req.body;
-  if (password !== confPassword)
+  console.log(req.body);
+  const { name, email, password, confPassword, roomType, roomPrice } = req.body;
+  if (
+    !name ||
+    !email ||
+    !password ||
+    !confPassword ||
+    !roomType ||
+    roomPrice === undefined ||
+    roomPrice === null ||
+    roomPrice === ""
+  ) {
+    return res.status(400).json({ message: "Semua field wajib diisi" });
+  }
+  if (password !== confPassword) {
     return res
       .status(400)
       .json({ message: "Password dan Confirm Password tidak cocok" });
+  }
+
   const hashPassword = await argon2.hash(password);
   try {
     await User.create({
-      name: name,
-      email: email,
+      name,
+      email,
       password: hashPassword,
-      role: role,
+      roomType,
+      roomPrice,
+      role: "user",
+      status: "aktif",
     });
     res.status(201).json({ message: "Register Berhasil!" });
   } catch (error) {

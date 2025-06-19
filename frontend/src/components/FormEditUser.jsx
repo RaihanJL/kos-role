@@ -8,6 +8,8 @@ const FormEditUser = () => {
   const [password, setPassword] = useState("");
   const [confPassword, setConfPassword] = useState("");
   const [role, setRole] = useState("");
+  const [roomType, setRoomType] = useState("");
+  const [roomPrice, setRoomPrice] = useState(0);
   const [msg, setMsg] = useState("");
   const navigate = useNavigate();
   const { id } = useParams();
@@ -19,37 +21,50 @@ const FormEditUser = () => {
         setName(response.data.name);
         setEmail(response.data.email);
         setRole(response.data.role);
+        setRoomType(response.data.roomType || "");
+        setRoomPrice(response.data.roomPrice || 0);
       } catch (error) {
         if (error.response) {
           setMsg(error.response.data.message);
         } else {
-          setMsg("An error occurred while fetching the product.");
+          setMsg("An error occurred while fetching the user.");
         }
       }
     };
     getUserById();
   }, [id]);
 
+  // Update harga otomatis saat tipe kamar berubah
+  useEffect(() => {
+    if (roomType === "kecil") setRoomPrice(1600000);
+    else if (roomType === "sedang") setRoomPrice(1800000);
+    else if (roomType === "besar") setRoomPrice(1900000);
+    else setRoomPrice(0);
+  }, [roomType]);
+
   const updateUser = async (e) => {
     e.preventDefault();
     setMsg("");
     try {
       await axios.patch(`http://localhost:5000/users/${id}`, {
-        name: name,
-        email: email,
-        password: password,
-        confPassword: confPassword,
-        role: role,
+        name,
+        email,
+        password,
+        confPassword,
+        role,
+        roomType,
+        roomPrice,
       });
       navigate("/users");
     } catch (error) {
       if (error.response && error.response.data) {
         setMsg(error.response.data.message);
       } else {
-        setMsg("An error occurred while saving the product.");
+        setMsg("An error occurred while saving the user.");
       }
     }
   };
+
   return (
     <div>
       <h1 className="title">Users</h1>
@@ -104,6 +119,34 @@ const FormEditUser = () => {
                     value={confPassword}
                     onChange={(e) => setConfPassword(e.target.value)}
                     placeholder="*****"
+                  />
+                </div>
+              </div>
+              <div className="field">
+                <label className="label">Tipe Kamar</label>
+                <div className="control">
+                  <div className="select is-fullwidth">
+                    <select
+                      value={roomType}
+                      onChange={(e) => setRoomType(e.target.value)}
+                    >
+                      <option value="">Pilih Tipe Kamar</option>
+                      <option value="kecil">Kecil</option>
+                      <option value="sedang">Sedang</option>
+                      <option value="besar">Besar</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+              <div className="field">
+                <label className="label">Harga Kamar</label>
+                <div className="control">
+                  <input
+                    type="number"
+                    className="input"
+                    value={roomPrice}
+                    readOnly
+                    placeholder="Harga kamar"
                   />
                 </div>
               </div>

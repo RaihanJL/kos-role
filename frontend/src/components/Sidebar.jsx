@@ -1,4 +1,3 @@
-import React from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import { IoPerson, IoPricetag, IoHome, IoLogOut } from "react-icons/io5";
 import { useDispatch, useSelector } from "react-redux";
@@ -26,12 +25,23 @@ const Sidebar = () => {
               Dashboard
             </NavLink>
           </li>
-          <li>
-            <NavLink to={"/products"}>
-              <IoPricetag />
-              Products
-            </NavLink>
-          </li>
+          {/* Hanya tampil jika user bukan admin */}
+          {user && user.role !== "admin" && (
+            <>
+              <li>
+                <NavLink to="/payment">
+                  <IoPricetag />
+                  Payment
+                </NavLink>
+              </li>
+              <li>
+                <NavLink to="/payment-history">
+                  <IoPricetag />
+                  Payment History
+                </NavLink>
+              </li>
+            </>
+          )}
         </ul>
         {user && user.role === "admin" && (
           <div>
@@ -41,6 +51,12 @@ const Sidebar = () => {
                 <NavLink to={"/users"}>
                   <IoPerson />
                   Users
+                </NavLink>
+              </li>
+              <li>
+                <NavLink to="/admin/payments">
+                  <IoPricetag />
+                  Validasi Pembayaran
                 </NavLink>
               </li>
             </ul>
