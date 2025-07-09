@@ -1,0 +1,41 @@
+.custom-pagination {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  list-style: none;
+  padding: 0;
+  margin: 24px 0 0 0;
+  flex-wrap: wrap;
+}
+.custom-prev,
+.custom-next {
+  flex: 1 1 0;
+  display: flex;
+  justify-content: center;
+}
+.custom-prev {
+  justify-content: flex-start;
+}
+.custom-next {
+  justify-content: flex-end;
+}
+.custom-page {
+  display: inline-block;
+  margin: 0 4px;
+}
+.is-current a,
+.is-current {
+  background: #3273dc;
+  color: #fff !important;
+  border-radius: 4px;
+  padding: 0 8px;
+}
+.is-disabled {
+  opacity: 0.5;
+  pointer-events: none;
+}
+@media (max-width: 600px) {
+  .custom-pagination {
+    font-size: 0.9rem;
+  }
+}

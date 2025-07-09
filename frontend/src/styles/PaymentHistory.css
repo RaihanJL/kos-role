@@ -1,0 +1,79 @@
+.custom-pagination {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  list-style: none;
+  padding: 0;
+  margin: 24px 0 0 0;
+  flex-wrap: wrap;
+}
+.custom-prev, .custom-next {
+  flex: 1 1 0;
+  display: flex;
+  justify-content: center;
+}
+.custom-prev {
+  justify-content: flex-start;
+}
+.custom-next {
+  justify-content: flex-end;
+}
+.custom-page {
+  display: inline-block;
+  margin: 0 4px;
+}
+.is-current a, .is-current {
+  background: #3273dc;
+  color: #fff !important;
+  border-radius: 4px;
+  padding: 0 8px;
+}
+.is-disabled {
+  opacity: 0.5;
+  pointer-events: none;
+}
+@media (max-width: 600px) {
+  .custom-pagination {
+    font-size: 0.9rem;
+  }
+}
+.print-table {
+  display: none;
+}
+@media print {
+  body * {
+    visibility: hidden !important;
+  }
+  .print-table {
+    visibility: visible !important;
+    display: table !important;
+    width: 100% !important;
+    font-size: 16px !important;
+    margin-top: 0 !important;
+  }
+  .print-table tr {
+    display: table-row !important;
+    visibility: visible !important;
+  }
+  .print-table th, .print-table td {
+    display: table-cell !important;
+    visibility: visible !important;
+    padding: 8px !important;
+    border: 1px solid #000 !important;
+    vertical-align: top !important;
+    text-align: left !important;
+  }
+  .print-signature, .print-signature * {
+    visibility: visible !important;
+    display: block !important;
+  }
+  .box {
+    visibility: visible !important;
+    position: static !important;
+    box-shadow: none !important;
+    background: #fff !important;
+  }
+  .table, .custom-pagination, .button, .notification, .title, .mb-3 {
+    display: none !important;
+  }
+}

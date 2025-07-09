@@ -15,6 +15,10 @@ const Userlist = () => {
   };
 
   const deleteUser = async (userId) => {
+    const confirmDelete = window.confirm(
+      "Apakah Anda yakin akan menghapus user ini?"
+    );
+    if (!confirmDelete) return;
     await axios.delete(`http://localhost:5000/users/${userId}`);
     getUsers();
   };
@@ -26,52 +30,66 @@ const Userlist = () => {
       <Link to="/users/add" className="button is-primary mb-2">
         Add New
       </Link>
-      <table className="table is-striped is-fullwidth">
-        <thead>
-          <tr>
-            <th>No</th>
-            <th>Name</th>
-            <th>Email</th>
-            <th>Role</th>
-            <th>Tipe Kamar</th>
-            <th>Harga Kamar</th>
-            <th>Actions</th>
-          </tr>
-        </thead>
-        <tbody>
-          {users.map((user, index) => (
-            <tr key={user.uuid}>
-              <td>{index + 1}</td>
-              <td>{user.name}</td>
-              <td>{user.email}</td>
-              <td>{user.role}</td>
-              <td>{user.role === "admin" ? "-" : user.roomType || "-"}</td>
-              <td>
-                {user.role === "admin"
-                  ? "-"
-                  : user.roomPrice
-                  ? `Rp${user.roomPrice.toLocaleString()}`
-                  : "-"}
-              </td>
-              <td>
-                <Link
-                  to={`/users/edit/${user.uuid}`}
-                  className="button is-small is-info"
-                >
-                  Edit
-                </Link>
-                <button
-                  onClick={() => deleteUser(user.uuid)}
-                  className="button is-small is-danger"
-                  style={{ marginLeft: 4 }}
-                >
-                  Delete
-                </button>
-              </td>
+      <div style={{ overflowX: "auto" }}>
+        <table className="table is-striped is-fullwidth is-size-7-mobile">
+          <thead>
+            <tr>
+              <th>No</th>
+              <th>Name</th>
+              <th>Email</th>
+              <th>Role</th>
+              <th>Tipe Kamar</th>
+              <th>Harga Kamar</th>
+              <th>Actions</th>
             </tr>
-          ))}
-        </tbody>
-      </table>
+          </thead>
+          <tbody>
+            {users.map((user, index) => (
+              <tr key={user.uuid}>
+                <td>{index + 1}</td>
+                <td>{user.name}</td>
+                <td>{user.email}</td>
+                <td>{user.role}</td>
+                <td>{user.role === "admin" ? "-" : user.roomType || "-"}</td>
+                <td>
+                  {user.role === "admin"
+                    ? "-"
+                    : user.roomPrice
+                    ? `Rp${user.roomPrice.toLocaleString()}`
+                    : "-"}
+                </td>
+                <td>
+                  <Link
+                    to={`/users/edit/${user.uuid}`}
+                    className="button is-small is-info"
+                  >
+                    Edit
+                  </Link>
+                  <button
+                    onClick={() => deleteUser(user.uuid)}
+                    className="button is-small is-danger"
+                    style={{ marginLeft: 4 }}
+                  >
+                    Delete
+                  </button>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+      <style>
+        {`
+      @media (max-width: 600px) {
+        table.is-size-7-mobile {
+          font-size: 0.85rem;
+        }
+        .button, .input, .select {
+          font-size: 0.95rem !important;
+        }
+      }
+      `}
+      </style>
     </div>
   );
 };

@@ -5,14 +5,7 @@ import argon2 from "argon2";
 export const getUsers = async (req, res) => {
   try {
     const users = await User.findAll({
-      attributes: [
-        "uuid",
-        "name",
-        "email",
-        "role",
-        "roomType",
-        "roomPrice"
-      ]
+      attributes: ["uuid", "name", "email", "role", "roomType", "roomPrice"],
     });
     res.json(users);
   } catch (error) {
@@ -23,10 +16,8 @@ export const getUsers = async (req, res) => {
 export const getUserById = async (req, res) => {
   try {
     const response = await User.findOne({
-      attributes: ["uuid", "name", "email", "role"],
-      where: {
-        uuid: req.params.id,
-      },
+      attributes: ["uuid", "name", "email", "role", "roomType", "roomPrice"],
+      where: { uuid: req.params.id },
     });
     if (!response) {
       return res.status(404).json({ message: "User not found" });
@@ -99,6 +90,8 @@ export const updateUser = async (req, res) => {
         email: email,
         password: hashPassword,
         role: role,
+        roomType: req.body.roomType,
+        roomPrice: req.body.roomPrice,
       },
       {
         where: {

@@ -42,9 +42,14 @@ const FormEditUser = () => {
     else setRoomPrice(0);
   }, [roomType]);
 
+  // ...existing code...
   const updateUser = async (e) => {
     e.preventDefault();
     setMsg("");
+    const confirmUpdate = window.confirm(
+      "Apakah Anda yakin ingin menyimpan perubahan data user ini?"
+    );
+    if (!confirmUpdate) return;
     try {
       await axios.patch(`http://localhost:5000/users/${id}`, {
         name,
@@ -64,6 +69,7 @@ const FormEditUser = () => {
       }
     }
   };
+  // ...existing code...
 
   return (
     <div>
