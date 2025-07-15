@@ -1,24 +1,36 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { RegisterUser } from "../features/authSlice";
+import { RegisterUser, reset } from "../features/authSlice";
 import { useNavigate } from "react-router-dom";
+import "../styles/AuthModern.css";
 
 const Register = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
+  const [phone, setPhone] = useState("");
+  const [address, setAddress] = useState("");
   const [password, setPassword] = useState("");
   const [confPassword, setConfPassword] = useState("");
   const [roomType, setRoomType] = useState("");
   const [roomPrice, setRoomPrice] = useState("");
+  const [showSuccess, setShowSuccess] = useState(false);
+
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { isLoading, isError, message, isSuccess } = useSelector((state) => state.auth);
+  const { isLoading, isError, message, isSuccess } = useSelector(
+    (state) => state.auth
+  );
 
   useEffect(() => {
     if (isSuccess) {
-      navigate("/"); // redirect ke halaman login
+      setShowSuccess(true);
+      setTimeout(() => {
+        setShowSuccess(false);
+        dispatch(reset());
+        navigate("/");
+      }, 1500);
     }
-  }, [isSuccess, navigate]);
+  }, [isSuccess, dispatch, navigate]);
 
   const handleRoomType = (e) => {
     const type = e.target.value;
@@ -30,37 +42,52 @@ const Register = () => {
   };
 
   const handleRegister = (e) => {
-  e.preventDefault();
-  // Pastikan roomPrice dikirim sebagai angka
-  dispatch(
-    RegisterUser({
-      name,
-      email,
-      password,
-      confPassword,
-      roomType,
-      roomPrice: Number(roomPrice), // pastikan number
-    })
-  );
-};
+    e.preventDefault();
+    dispatch(
+      RegisterUser({
+        name,
+        email,
+        phone,
+        address,
+        password,
+        confPassword,
+        roomType,
+        roomPrice: Number(roomPrice),
+      })
+    );
+  };
 
   return (
-    <div>
-      <section className="hero has-background-grey-light is-fullheight is-fullwidth">
+    <div className="auth-bg">
+      <section className="hero is-fullheight">
         <div className="hero-body">
           <div className="container">
             <div className="columns is-centered">
-              <div className="column is-4">
-                <form onSubmit={handleRegister} className="box">
-                  {isError && message && (
-                    <p className="has-text-centered has-text-danger">
-                      {message}
-                    </p>
+              <div className="column is-4-desktop is-6-tablet">
+                <form onSubmit={handleRegister} className="box auth-box">
+                  <div className="has-text-centered mb-4">
+                    <span className="icon is-large auth-logo">
+                      <i className="fas fa-user-plus fa-3x"></i>
+                    </span>
+                  </div>
+                  <h1 className="title is-3 has-text-centered mb-4">
+                    Register
+                  </h1>
+                  {/* Notifikasi sukses */}
+                  {showSuccess && (
+                    <div className="notification is-success is-light">
+                      Registrasi berhasil! Silakan login.
+                    </div>
                   )}
-                  <h1 className="title is-2 has-text-centered">Register</h1>
+                  {/* Notifikasi error */}
+                  {isError && message && (
+                    <div className="notification is-danger is-light">
+                      {message}
+                    </div>
+                  )}
                   <div className="field">
                     <label className="label">Nama</label>
-                    <div className="control">
+                    <div className="control has-icons-left">
                       <input
                         type="text"
                         className="input"
@@ -69,11 +96,14 @@ const Register = () => {
                         placeholder="Nama"
                         required
                       />
+                      <span className="icon is-small is-left">
+                        <i className="fas fa-user"></i>
+                      </span>
                     </div>
                   </div>
                   <div className="field">
                     <label className="label">Email</label>
-                    <div className="control">
+                    <div className="control has-icons-left">
                       <input
                         type="email"
                         className="input"
@@ -82,11 +112,46 @@ const Register = () => {
                         placeholder="Email"
                         required
                       />
+                      <span className="icon is-small is-left">
+                        <i className="fas fa-envelope"></i>
+                      </span>
+                    </div>
+                  </div>
+                  <div className="field">
+                    <label className="label">Nomor Handphone</label>
+                    <div className="control has-icons-left">
+                      <input
+                        type="tel"
+                        className="input"
+                        value={phone}
+                        onChange={(e) => setPhone(e.target.value)}
+                        placeholder="08xxxxxxxxxx"
+                        required
+                      />
+                      <span className="icon is-small is-left">
+                        <i className="fas fa-phone"></i>
+                      </span>
+                    </div>
+                  </div>
+                  <div className="field">
+                    <label className="label">Alamat</label>
+                    <div className="control has-icons-left">
+                      <input
+                        type="text"
+                        className="input"
+                        value={address}
+                        onChange={(e) => setAddress(e.target.value)}
+                        placeholder="Alamat lengkap"
+                        required
+                      />
+                      <span className="icon is-small is-left">
+                        <i className="fas fa-map-marker-alt"></i>
+                      </span>
                     </div>
                   </div>
                   <div className="field">
                     <label className="label">Password</label>
-                    <div className="control">
+                    <div className="control has-icons-left">
                       <input
                         type="password"
                         className="input"
@@ -95,11 +160,14 @@ const Register = () => {
                         placeholder="*****"
                         required
                       />
+                      <span className="icon is-small is-left">
+                        <i className="fas fa-lock"></i>
+                      </span>
                     </div>
                   </div>
                   <div className="field">
                     <label className="label">Konfirmasi Password</label>
-                    <div className="control">
+                    <div className="control has-icons-left">
                       <input
                         type="password"
                         className="input"
@@ -108,6 +176,9 @@ const Register = () => {
                         placeholder="*****"
                         required
                       />
+                      <span className="icon is-small is-left">
+                        <i className="fas fa-lock"></i>
+                      </span>
                     </div>
                   </div>
                   <div className="field">
@@ -149,13 +220,15 @@ const Register = () => {
                   <div className="field mt-5">
                     <button
                       type="submit"
-                      className="button is-success is-fullwidth"
+                      className={`button is-success is-fullwidth is-medium ${
+                        isLoading ? "is-loading" : ""
+                      }`}
                       disabled={isLoading}
                     >
-                      {isLoading ? "Loading..." : "Register"}
+                      Register
                     </button>
                   </div>
-                  <div className="has-text-centered mt-2">
+                  <div className="has-text-centered mt-4">
                     <span>Sudah punya akun? </span>
                     <a
                       href="#"
@@ -163,6 +236,7 @@ const Register = () => {
                         e.preventDefault();
                         navigate("/");
                       }}
+                      className="has-text-link"
                     >
                       Login di sini
                     </a>

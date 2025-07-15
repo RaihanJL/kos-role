@@ -1,0 +1,116 @@
+body,
+.layout-root {
+  background: var(--background);
+  color: var(--text-main);
+}
+
+.layout-navbar {
+  background: var(--sidebar-bg);
+  border-bottom: 1.5px solid var(--secondary);
+}
+
+.layout-sidebar {
+  background: var(--sidebar-bg);
+  border-right: 1.5px solid var(--secondary);
+}
+
+.menu-label {
+  color: var(--primary);
+}
+
+.menu-list li a.is-flex.active,
+.menu-list li a.is-flex:focus,
+.menu-list li a.is-flex:hover {
+  background: var(--secondary);
+  color: var(--primary);
+}
+
+.tag.is-success {
+  background: var(--success);
+  color: #fff;
+}
+
+.rules-box {
+  width: 100%;
+  max-width: 100%;
+  margin: 40px 0;
+  background: #fff;
+  border-radius: 18px;
+  box-shadow: 0 4px 24px rgba(30, 60, 90, 0.08);
+  position: relative;
+  padding: 36px 32px 32px 32px;
+  border: 1.5px solid #e0e7ef;
+}
+
+.rules-title {
+  font-weight: 700;
+  font-size: 28px;
+  margin-bottom: 18px;
+  color: #1976d2;
+  letter-spacing: 1px;
+  text-shadow: 0 2px 8px #e3eafc;
+}
+
+.rules-edit-btn {
+  position: absolute;
+  top: 28px;
+  right: 32px;
+  z-index: 2;
+  font-weight: 600;
+  font-size: 16px;
+  padding: 8px 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px #b3c6e2;
+}
+
+.rules-textarea {
+  min-height: 320px;
+  font-size: 18px;
+  font-family: inherit;
+  border-radius: 10px;
+  border: 1.5px solid #b3c6e2;
+  margin-bottom: 16px;
+  background: #fafdff;
+  padding: 16px;
+  width: 100%;
+}
+
+.rules-content {
+  font-size: 20px;
+  color: #222;
+  line-height: 1.7;
+  font-family: inherit;
+  background: none;
+  border: none;
+  padding: 0;
+  white-space: pre-wrap;
+  margin-top: 8px;
+  margin-bottom: 4px;
+  min-height: 120px;
+}
+
+.rules-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 18px;
+}
+
+.rules-title {
+  font-weight: 700;
+  font-size: 28px;
+  color: #1976d2;
+  letter-spacing: 1px;
+  text-shadow: 0 2px 8px #e3eafc;
+  /* margin-bottom: 18px;  <-- Hapus margin-bottom di sini */
+}
+
+.rules-edit-btn {
+  position: static; /* Hapus absolute */
+  margin-left: 16px;
+  font-weight: 600;
+  font-size: 16px;
+  padding: 8px 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px #b3c6e2;
+}

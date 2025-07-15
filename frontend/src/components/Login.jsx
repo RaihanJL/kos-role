@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { LoginUser, reset } from "../features/authSlice";
-import { useLocation } from "react-router-dom";
+import "../styles/AuthModern.css"; // Tambahkan file CSS custom
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -14,13 +14,10 @@ const Login = () => {
   const { user, isSuccess, isLoading, isError, message } = useSelector(
     (state) => state.auth
   );
-  
 
   useEffect(() => {
-    // Ambil error dari redirect hanya sekali saat mount
     if (location.state?.error) {
       setRedirectError(location.state.error);
-      // Hapus error dari history agar tidak muncul terus
       window.history.replaceState({}, document.title);
     }
   }, [location.state]);
@@ -34,53 +31,72 @@ const Login = () => {
 
   const Auth = (e) => {
     e.preventDefault();
-    setRedirectError(""); // Hapus pesan error redirect saat user mencoba login
+    setRedirectError("");
     dispatch(LoginUser({ email, password }));
   };
 
   return (
-    <div>
-      <section className="hero has-background-grey-light is-fullheight is-fullwidth">
+    <div className="auth-bg">
+      <section className="hero is-fullheight">
         <div className="hero-body">
           <div className="container">
             <div className="columns is-centered">
-              <div className="column is-4">
-                <form onSubmit={Auth} className="box">
-                  {redirectError && (
-                    <p className="has-text-centered">{redirectError}</p>
+              <div className="column is-4-desktop is-6-tablet">
+                <form onSubmit={Auth} className="box auth-box">
+                  <div className="has-text-centered mb-4">
+                    <span className="icon is-large auth-logo">
+                      <i className="fas fa-user-circle fa-3x"></i>
+                    </span>
+                  </div>
+                  <h1 className="title is-3 has-text-centered mb-4">Sign In</h1>
+                  {(redirectError || (isError && message)) && (
+                    <div className="notification is-danger is-light">
+                      {redirectError ? redirectError : message}
+                    </div>
                   )}
-                  {/* Tambahkan baris ini untuk menampilkan error dari redux */}
-                  {isError && message && (
-                    <p className="has-text-centered has-text-danger">
-                      {message}
-                    </p>
-                  )}
-                  <h1 className="title is-2 has-text-centered">Sign In</h1>
                   <div className="field">
                     <label className="label">Email</label>
-                    <div className="control">
+                    <div className="control has-icons-left">
                       <input
-                        type="text"
+                        type="email"
                         className="input"
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
                         placeholder="Email"
+                        required
                       />
+                      <span className="icon is-small is-left">
+                        <i className="fas fa-envelope"></i>
+                      </span>
                     </div>
                   </div>
                   <div className="field">
                     <label className="label">Password</label>
-                    <div className="control">
+                    <div className="control has-icons-left">
                       <input
                         type="password"
                         className="input"
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
                         placeholder="*****"
+                        required
                       />
+                      <span className="icon is-small is-left">
+                        <i className="fas fa-lock"></i>
+                      </span>
                     </div>
                   </div>
-                  <div className="has-text-centered mt-2">
+                  <div className="field mt-5">
+                    <button
+                      type="submit"
+                      className={`button is-success is-fullwidth is-medium ${
+                        isLoading ? "is-loading" : ""
+                      }`}
+                    >
+                      Login
+                    </button>
+                  </div>
+                  <div className="has-text-centered mt-4">
                     <span>Belum punya akun? </span>
                     <a
                       href="#"
@@ -88,17 +104,10 @@ const Login = () => {
                         e.preventDefault();
                         navigate("/register");
                       }}
+                      className="has-text-link"
                     >
                       Daftar di sini
                     </a>
-                  </div>
-                  <div className="field mt-5">
-                    <button
-                      type="submit"
-                      className="button is-success is-fullwidth"
-                    >
-                      {isLoading ? "Loading..." : "Login"}
-                    </button>
                   </div>
                 </form>
               </div>

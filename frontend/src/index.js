@@ -6,6 +6,7 @@ import App from "./App";
 import "bulma/css/bulma.css";
 import axios from "axios";
 import "./global.css";
+import "./styles/colors.css";
 
 axios.defaults.withCredentials = true;
 

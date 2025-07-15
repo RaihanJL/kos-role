@@ -155,3 +155,5 @@ Content-Type: application/json
     "dueDate": "2024-06-16"
 }
 
+###
+GET http://localhost:5000/users/11/arrears

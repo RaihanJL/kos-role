@@ -1,9 +1,17 @@
 import React from "react";
 
 const PaymentHistoryPrintTable = ({ payments }) => (
-  <div>
+  <div
+    className="print-table"
+    style={{
+      width: "100%",
+      background: "#fff",
+      padding: 0,
+      margin: 0,
+      boxSizing: "border-box",
+    }}
+  >
     <div
-      className="print-table"
       style={{
         textAlign: "center",
         fontWeight: "bold",
@@ -14,7 +22,6 @@ const PaymentHistoryPrintTable = ({ payments }) => (
       Riwayat Pembayaran
     </div>
     <table
-      className="print-table"
       style={{
         width: "100%",
         borderCollapse: "collapse",
@@ -59,18 +66,24 @@ const PaymentHistoryPrintTable = ({ payments }) => (
         ))}
       </tbody>
     </table>
-    <div className="print-signature" style={{ marginTop: 40, width: "100%" }}>
-      <div style={{ textAlign: "left", marginRight: 40 }}>
+    <div
+      className="print-footer"
+      style={{
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        marginTop: 40,
+        width: "100%",
+      }}
+    >
+      <div style={{ textAlign: "center" }}>
         <div>Admin,</div>
         <img
           src="/signature-admin.png"
           alt="Tanda Tangan Admin"
           style={{ width: 120, margin: "16px 0" }}
         />
-        <div style={{ fontWeight: "bold", textDecoration: "underline" }}>
-          Narny Syamsuddin
-        </div>
-        <div style={{ fontSize: 12 }}>Tanda Tangan</div>
+        <div style={{ fontWeight: "bold", marginTop: 8 }}>Narny Syamsuddin</div>
       </div>
     </div>
   </div>

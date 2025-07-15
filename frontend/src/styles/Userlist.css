@@ -1,0 +1,76 @@
+.modern-table th,
+.modern-table td {
+  vertical-align: middle !important;
+  white-space: nowrap;
+}
+
+.modern-table th {
+  background: #f0f4fa;
+  color: #1976d2;
+  font-weight: 700;
+  font-size: 1rem;
+}
+
+.modern-table tr {
+  transition: background 0.18s;
+}
+
+.modern-table tr:hover {
+  background: #e3e9f7 !important;
+}
+
+.box {
+  box-shadow: 0 2px 8px rgba(0,0,0,0.07);
+  border-radius: 18px;
+  background: #f9fbfd;
+}
+
+.action-buttons {
+  display: flex;
+  gap: 6px;
+  justify-content: center;
+  align-items: center;
+}
+
+.big-cell {
+  font-size: 1.08rem;
+  font-weight: 600;
+}
+
+.address-cell {
+  max-width: 160px;
+  display: inline-block;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  vertical-align: middle;
+  font-size: 1.08rem;
+  font-weight: 600;
+}
+
+@media (max-width: 900px) {
+  .modern-table th,
+  .modern-table td {
+    font-size: 0.97rem;
+    padding: 8px 6px;
+  }
+  .big-cell, .address-cell {
+    font-size: 1rem;
+  }
+}
+
+@media (max-width: 600px) {
+  .modern-table th,
+  .modern-table td {
+    font-size: 0.85rem;
+    padding: 6px 4px;
+  }
+  .button,
+  .input,
+  .select {
+    font-size: 0.95rem !important;
+  }
+  .big-cell, .address-cell {
+    font-size: 0.95rem;
+  }
+}

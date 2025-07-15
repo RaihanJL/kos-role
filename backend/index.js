@@ -5,12 +5,13 @@ import dotenv from "dotenv";
 import db from "./config/Database.js";
 import SequelizeStore from "connect-session-sequelize";
 import UserRoute from "./routes/UserRoute.js";
-import ProductRoute from "./routes/ProductRoute.js";
 import AuthRoute from "./routes/AuthRoute.js";
 import PaymentRoute from "./routes/PaymentRoute.js";
+import AdminRoute from "./routes/AdminRoute.js";
 import "./scheduler/paymentReminder.js";
-import "./scheduler/generatePayments.js";
 import rulesRoute from "./routes/RulesRoute.js";
+import cron from "node-cron";
+import { createMonthlyBills } from "./cron/createMonthlyBills.js";
 
 dotenv.config();
 
@@ -20,6 +21,8 @@ const sessionStore = SequelizeStore(session.Store);
 const store = new sessionStore({
   db: db,
 });
+
+// db.sync({alter: true})
 
 // (async () => {
 //   await db.sync();
@@ -46,11 +49,14 @@ app.use(
 app.use(express.json());
 app.use(express.static("public"));
 app.use(UserRoute);
-app.use(ProductRoute);
 app.use(AuthRoute);
 app.use(PaymentRoute);
+app.use(AdminRoute)
 app.use(rulesRoute);
 // store.sync();
+
+cron.schedule("0 0 1 * *", createMonthlyBills);
+// createMonthlyBills();
 
 app.listen(process.env.APP_PORT, () => {
   console.log(`Server is running...`);

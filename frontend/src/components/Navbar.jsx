@@ -1,19 +1,11 @@
-import React from "react";
-import { NavLink, useNavigate } from "react-router-dom";
-import logo from "../logo.png"; // Adjust the path as necessary
-import { useDispatch, useSelector } from "react-redux";
-import { LogOut, reset } from "../features/authSlice";
+import React, { useState } from "react";
+import { NavLink } from "react-router-dom";
+import logo from "../logo.png";
+import Sidebar from "./Sidebar";
+import "../styles/Navigation.css";
 
 const Navbar = () => {
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
-  const { user } = useSelector((state) => state.auth);
-
-  const logout = () => {
-    dispatch(LogOut());
-    dispatch(reset());
-    navigate("/");
-  };
+  const [sidebarOpen, setSidebarOpen] = useState(false);
 
   return (
     <div>
@@ -23,34 +15,44 @@ const Navbar = () => {
         aria-label="main navigation"
       >
         <div className="navbar-brand">
-          <NavLink to="/dashboard" className="navbar-item">
-            <img src={logo} width="112" height="28" alt="Bulma Logo" />
-          </NavLink>
-
-          <a
-            href="!#"
-            role="button"
-            className="navbar-burger burger"
-            aria-label="menu"
-            aria-expanded="false"
-            data-target="navbarBasicExample"
+          {/* Tombol menu sidebar hanya tampil di mobile */}
+          <button
+            className="button is-white is-hidden-tablet sidebar-menu-btn"
+            onClick={() => setSidebarOpen(true)}
+            aria-label="Open sidebar"
           >
-            <span aria-hidden="true"></span>
-            <span aria-hidden="true"></span>
-            <span aria-hidden="true"></span>
-          </a>
-        </div>
-
-        <div id="navbarBasicExample" className="navbar-menu">
-          <div className="navbar-end">
-            <div className="navbar-item">
-              <div className="buttons">
-                <button onClick={logout} className="button is-light">Log Out</button>
-              </div>
-            </div>
-          </div>
+            <span className="icon">
+              <i className="fas fa-bars"></i>
+            </span>
+          </button>
+          <NavLink to="/dashboard" className="navbar-item">
+            <img src={logo} width="112" height="28" alt="Logo" />
+          </NavLink>
         </div>
       </nav>
+
+      {/* Sidebar Drawer Overlay */}
+      {sidebarOpen && (
+        <div
+          className="sidebar-drawer-overlay"
+          onClick={() => setSidebarOpen(false)}
+        >
+          <div className="sidebar-drawer" onClick={(e) => e.stopPropagation()}>
+            <div className="sidebar-drawer-header">
+              <button
+                className="button is-white sidebar-drawer-close"
+                onClick={() => setSidebarOpen(false)}
+                aria-label="Tutup menu"
+              >
+                <span className="icon">
+                  <i className="fas fa-times"></i>
+                </span>
+              </button>
+            </div>
+            <Sidebar />
+          </div>
+        </div>
+      )}
     </div>
   );
 };

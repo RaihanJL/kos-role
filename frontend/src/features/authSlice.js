@@ -26,6 +26,7 @@ export const LoginUser = createAsyncThunk(
     }
   }
 );
+
 export const RegisterUser = createAsyncThunk(
   "user/RegisterUser",
   async (user, thunkAPI) => {
@@ -33,6 +34,8 @@ export const RegisterUser = createAsyncThunk(
       const response = await axios.post("http://localhost:5000/users", {
         name: user.name,
         email: user.email,
+        phone: user.phone,
+        address: user.address,
         password: user.password,
         confPassword: user.confPassword,
         roomType: user.roomType,
@@ -68,7 +71,13 @@ export const authSlice = createSlice({
   name: "auth",
   initialState,
   reducers: {
-    reset: (state) => initialState,
+    reset: (state) => {
+      state.user = null;
+      state.isError = false;
+      state.isSuccess = false;
+      state.isLoading = false;
+      state.message = "";
+    },
   },
   extraReducers: (builder) => {
     builder.addCase(LoginUser.pending, (state) => {
@@ -107,7 +116,7 @@ export const authSlice = createSlice({
     builder.addCase(RegisterUser.fulfilled, (state, action) => {
       state.isLoading = false;
       state.isSuccess = true;
-      state.user = action.payload;
+      state.user = null; // Jangan auto-login setelah register
     });
     builder.addCase(RegisterUser.rejected, (state, action) => {
       state.isLoading = false;

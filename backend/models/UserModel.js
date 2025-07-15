@@ -37,12 +37,28 @@ const User = db.define(
         notEmpty: true,
       },
     },
+    phone: {
+      type: DataTypes.STRING,
+      allowNull: true,
+    },
+    address: {
+      type: DataTypes.STRING,
+      allowNull: true,
+    },
     role: {
       type: DataTypes.STRING,
       allowNull: false,
       validate: {
         notEmpty: true,
         isIn: [["admin", "user"]],
+      },
+    },
+    status: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      defaultValue: "aktif",
+      validate: {
+        isIn: [["aktif", "suspend"]],
       },
     },
     roomType: {

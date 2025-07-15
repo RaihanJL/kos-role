@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import "../styles/RulesBox.css";
 
-const RulesBox = ({ isAdmin }) => {
+const RulesBox = ({ isAdmin, boxStyle }) => {
   const [rules, setRules] = useState("");
   const [isEditing, setIsEditing] = useState(false);
   const [editValue, setEditValue] = useState("");
 
-  // Fetch rules saat komponen mount
   useEffect(() => {
     const fetchRules = async () => {
       const res = await axios.get("http://localhost:5000/rules");
@@ -15,19 +15,17 @@ const RulesBox = ({ isAdmin }) => {
     fetchRules();
   }, []);
 
-  // Saat admin klik edit
   const handleEdit = () => {
     setEditValue(rules);
     setIsEditing(true);
   };
 
-  // Update rules (PUT /rules)
   const handleSave = async () => {
     try {
       await axios.put(
         "http://localhost:5000/rules",
         { content: editValue },
-        { withCredentials: true } // jika pakai cookie/session
+        { withCredentials: true }
       );
       setRules(editValue);
       setIsEditing(false);
@@ -37,52 +35,60 @@ const RulesBox = ({ isAdmin }) => {
   };
 
   return (
-    <div
-      className="box"
-      style={{
-        maxWidth: 1200,
-        width: "95%",
-        margin: "32px auto",
-        position: "relative", // tambahkan ini!
-      }}
-    >
-      {isAdmin && !isEditing && (
-        <button
-          className="button is-small is-info"
-          style={{ position: "absolute", top: 16, right: 16, zIndex: 2 }}
-          onClick={handleEdit}
-        >
-          Edit
-        </button>
-      )}
+    <div className="rules-box" style={boxStyle}>
+      <div className="rules-header">
+        <div className="rules-title">📜 Peraturan & Tata Tertib Kos</div>
+        {isAdmin && !isEditing && (
+          <button
+            className="button is-info rules-edit-btn"
+            onClick={handleEdit}
+          >
+            Edit
+          </button>
+        )}
+      </div>
       {isEditing ? (
         <div>
           <textarea
-            className="textarea"
-            style={{ minHeight: 400 }}
+            className="textarea rules-textarea"
             value={editValue}
             onChange={(e) => setEditValue(e.target.value)}
           />
-          <div className="mt-2">
-            <button className="button is-success mr-2" onClick={handleSave}>
+          <div style={{ marginTop: 8 }}>
+            <button
+              className="button is-success mr-2"
+              style={{
+                fontWeight: 600,
+                fontSize: 16,
+                borderRadius: 8,
+                marginRight: 10,
+              }}
+              onClick={handleSave}
+            >
               Simpan
             </button>
-            <button className="button" onClick={() => setIsEditing(false)}>
+            <button
+              className="button"
+              style={{
+                fontWeight: 600,
+                fontSize: 16,
+                borderRadius: 8,
+                background: "#f5f7fa",
+              }}
+              onClick={() => setIsEditing(false)}
+            >
               Batal
             </button>
           </div>
         </div>
       ) : (
-        <pre
-          style={{
-            whiteSpace: "pre-wrap",
-            background: "none",
-            border: "none",
-            fontFamily: "inherit",
-          }}
-        >
-          {rules}
-        </pre>
+        <div className="rules-content">
+          {rules || (
+            <span style={{ color: "#888" }}>
+              Belum ada peraturan yang ditambahkan.
+            </span>
+          )}
+        </div>
       )}
     </div>
   );

@@ -1,0 +1,189 @@
+body,
+.layout-root {
+  background: var(--background);
+  color: var(--text-main);
+}
+
+.layout-navbar {
+  background: var(--sidebar-bg);
+  border-bottom: 1.5px solid var(--secondary);
+}
+
+.layout-sidebar {
+  background: var(--sidebar-bg);
+  border-right: 1.5px solid var(--secondary);
+}
+
+.menu-label {
+  color: var(--primary);
+}
+
+.menu-list li a.is-flex.active,
+.menu-list li a.is-flex:focus,
+.menu-list li a.is-flex:hover {
+  background: var(--secondary);
+  color: var(--primary);
+}
+
+.tag.is-success {
+  background: var(--success);
+  color: #fff;
+}
+
+.welcome-container {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 32px 0;
+  font-family: Inter, Arial, sans-serif;
+}
+
+.welcome-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 32px;
+}
+
+.welcome-header-img {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  border: 2px solid #1976d2;
+  background: #fff;
+  object-fit: cover;
+}
+
+/* Info Cards Responsive Grid */
+.info-cards {
+  display: flex;
+  gap: 24px;
+  margin-bottom: 32px;
+  flex-wrap: wrap;
+}
+
+.info-box {
+  flex: 1 1 220px;
+  background: #fff;
+  box-shadow: 0 2px 8px #f0f1f2;
+  min-width: 0;
+  padding: 20px 18px;
+  border-radius: 12px;
+  border-left: 5px solid #1976d2;
+  transition: box-shadow 0.2s;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+}
+
+.info-box.info-kamar {
+  border-left: 5px solid #1976d2;
+}
+.info-box.status {
+  border-left: 5px solid #43a047;
+}
+.info-box.tunggakan {
+  border-left: 5px solid #d32f2f;
+}
+
+/* Membuat tag status selalu di dalam box dan responsif */
+.status-tag-wrapper {
+  display: flex;
+  align-items: center;
+  min-height: 38px;
+  width: 100%;
+  overflow-x: auto;
+}
+
+.info-box .tag {
+  white-space: normal;
+  word-break: break-word;
+  max-width: 100%;
+  font-size: 1rem;
+  padding: 6px 14px;
+  text-align: center;
+  display: inline-block;
+}
+
+.riwayat-box {
+  margin-bottom: 32px;
+  background: #fff;
+  box-shadow: 0 2px 8px #f0f1f2;
+  padding: 24px 18px;
+}
+
+.kontak-box {
+  margin-top: 32px;
+  background: #fff;
+  border-left: 5px solid #1976d2;
+  box-shadow: 0 2px 8px #f0f1f2;
+  padding: 24px 18px;
+}
+
+.welcome-title {
+  margin-bottom: 0;
+}
+
+.welcome-subtitle {
+  color: #888;
+  font-size: 18px;
+}
+
+.kontak-title {
+  font-weight: 600;
+  font-size: 16px;
+  margin-bottom: 8px;
+}
+
+.kontak-content {
+  font-size: 17px;
+}
+
+/* ========== Tambahan CSS Responsif untuk Tabel & Info Cards ========== */
+.responsive-table-wrapper {
+  width: 100%;
+  overflow-x: auto;
+}
+
+.table.is-bordered {
+  min-width: 600px;
+}
+
+@media (max-width: 768px) {
+  .welcome-container,
+  .box,
+  .info-cards {
+    padding: 8px !important;
+  }
+  .info-cards {
+    display: grid !important;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px !important;
+    margin-bottom: 24px;
+  }
+  .info-box {
+    min-width: 0 !important;
+    padding: 14px 8px !important;
+    font-size: 15px !important;
+    border-radius: 10px;
+  }
+  /* Jika jumlah box ganjil, box terakhir full width */
+  .info-cards > .info-box:last-child:nth-child(odd) {
+    grid-column: 1 / span 2;
+  }
+  .welcome-header {
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    gap: 12px !important;
+  }
+  .welcome-header-img {
+    width: 48px !important;
+    height: 48px !important;
+  }
+  .responsive-table-wrapper {
+    margin: 0 -8px;
+  }
+  .info-box .tag {
+    font-size: 0.95rem;
+    padding: 6px 8px;
+  }
+}

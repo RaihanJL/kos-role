@@ -1,41 +1,211 @@
-.custom-pagination {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  list-style: none;
-  padding: 0;
-  margin: 24px 0 0 0;
-  flex-wrap: wrap;
+/* Container utama */
+body, .layout-root {
+  background: var(--background);
+  color: var(--text-main);
 }
-.custom-prev,
-.custom-next {
-  flex: 1 1 0;
+
+.layout-navbar {
+  background: var(--sidebar-bg);
+  border-bottom: 1.5px solid var(--secondary);
+}
+
+.layout-sidebar {
+  background: var(--sidebar-bg);
+  border-right: 1.5px solid var(--secondary);
+}
+
+.menu-label {
+  color: var(--primary);
+}
+
+.menu-list li a.is-flex.active,
+.menu-list li a.is-flex:focus,
+.menu-list li a.is-flex:hover {
+  background: var(--secondary);
+  color: var(--primary);
+}
+
+.tag.is-success {
+  background: var(--success);
+  color: #fff;
+}
+
+.admin-payments-container {
+  max-width: 1100px;
+  margin: 32px auto;
+  background: #fff;
+  border-radius: 16px;
+  box-shadow: 0 4px 24px rgba(30, 60, 90, 0.08);
+  padding: 32px 24px 32px 24px;
+}
+
+/* Header */
+.admin-payments-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  margin-bottom: 24px;
+}
+
+.admin-payments-title {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #000000;
+  margin-bottom: 0;
+}
+
+/* Kontrol search & sort */
+.admin-payments-controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-bottom: 18px;
+}
+
+.admin-payments-controls .input,
+.admin-payments-controls .select,
+.admin-payments-controls .button {
+  font-size: 1rem;
+  border-radius: 8px;
+}
+
+/* Tabel pembayaran */
+.admin-payments-table {
+  background: #fff;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 2px 8px #f0f1f2;
+}
+
+.admin-payments-table th,
+.admin-payments-table td {
+  vertical-align: middle !important;
+}
+
+.admin-payments-table th {
+  background: #f5f7fa;
+  font-weight: 600;
+  color: #1976d2;
+  font-size: 1rem;
+}
+
+.admin-payments-table td {
+  font-size: 0.98rem;
+}
+
+/* Gambar bukti pembayaran */
+.proof-img {
+  border-radius: 6px;
+  border: 1px solid #e0e7ef;
+  max-width: 80px;
+  max-height: 80px;
+  object-fit: cover;
+}
+
+/* Pagination */
+.custom-pagination-wrapper {
   display: flex;
   justify-content: center;
+  width: 100%;
+  margin-top: 18px;
 }
-.custom-prev {
-  justify-content: flex-start;
+
+.custom-pagination {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+  list-style: none;
+  padding: 0;
+  margin: 0;
 }
+
+.custom-page,
+.custom-prev,
 .custom-next {
-  justify-content: flex-end;
-}
-.custom-page {
+  list-style: none;
   display: inline-block;
-  margin: 0 4px;
 }
+
+.custom-prev a,
+.custom-next a {
+  white-space: nowrap;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.custom-page a,
+.custom-prev a,
+.custom-next a {
+  display: inline-block;
+  padding: 6px 14px;
+  border-radius: 6px;
+  background: #f5f7fa;
+  color: #1976d2;
+  font-weight: 600;
+  text-decoration: none;
+  transition: background 0.2s;
+  font-size: 0.95rem;
+}
+
+.custom-page a:hover,
+.custom-prev a:hover,
+.custom-next a:hover {
+  background: #e3eafc;
+}
+
 .is-current a,
 .is-current {
-  background: #3273dc;
+  background: #1976d2 !important;
   color: #fff !important;
-  border-radius: 4px;
-  padding: 0 8px;
+  border-radius: 6px;
 }
-.is-disabled {
+
+.is-disabled a {
   opacity: 0.5;
   pointer-events: none;
 }
-@media (max-width: 600px) {
+
+/* Tambahan untuk badge status pembayaran */
+.tag.is-success {
+  background: #e8f5e9 !important;
+  color: #388e3c !important;
+  border: 1px solid #b2dfdb;
+}
+.tag.is-warning {
+  background: #fffde7 !important;
+  color: #fbc02d !important;
+  border: 1px solid #ffe082;
+}
+.tag.is-danger {
+  background: #ffebee !important;
+  color: #d32f2f !important;
+  border: 1px solid #ffcdd2;
+}
+
+/* Responsive */
+@media (max-width: 700px) {
+  .admin-payments-container {
+    padding: 12px 2vw;
+  }
+  .admin-payments-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+  .admin-payments-title {
+    font-size: 1.3rem;
+  }
+  .admin-payments-controls {
+    flex-direction: column;
+    gap: 8px;
+  }
+  .admin-payments-table th,
+  .admin-payments-table td {
+    font-size: 0.92rem;
+  }
   .custom-pagination {
-    font-size: 0.9rem;
+    justify-content: center;
   }
 }

@@ -1,0 +1,48 @@
+/* Drawer sidebar untuk mobile */
+.sidebar-drawer-overlay {
+  position: fixed;
+  z-index: 1001;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.3);
+  display: flex;
+}
+.sidebar-drawer {
+  width: 260px;
+  max-width: 80vw;
+  background: #fff;
+  height: 100%;
+  box-shadow: 2px 0 8px #0001;
+  animation: slideInLeft 0.2s;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}
+@keyframes slideInLeft {
+  from {
+    transform: translateX(-100%);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+.sidebar-drawer-header {
+  display: flex;
+  justify-content: flex-end;
+  padding: 8px 8px 0 8px;
+}
+.sidebar-drawer-close {
+  font-size: 1.5rem;
+}
+@media (min-width: 769px) {
+  .sidebar-drawer-overlay,
+  .sidebar-drawer {
+    display: none !important;
+  }
+  .sidebar-menu-btn {
+    display: none !important;
+  }
+}
+

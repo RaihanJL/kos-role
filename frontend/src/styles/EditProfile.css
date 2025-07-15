@@ -1,0 +1,54 @@
+.edit-profile-outer {
+  height: calc(90vh - 64px); /* 64px = tinggi navbar */
+  min-height: unset;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--background);
+  box-sizing: border-box;
+}
+.edit-profile-container {
+  width: 100%;
+  max-width: 480px;
+  background: var(--sidebar-bg);
+  border-radius: 18px;
+  box-shadow: 0 4px 16px rgba(25, 118, 210, 0.07);
+  padding: 36px 32px 32px 32px;
+  font-size: 18px;
+}
+
+.edit-profile-title {
+  margin-bottom: 28px;
+  color: var(--primary);
+  text-align: center;
+}
+
+.edit-profile-container .input,
+.edit-profile-container .button {
+  font-size: 18px;
+}
+
+.edit-profile-container .button.is-primary {
+  background: var(--primary);
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  transition: background 0.15s;
+}
+
+.edit-profile-container .button.is-primary:hover {
+  background: var(--primary-dark);
+}
+
+.edit-profile-container .field:not(:last-child) {
+  margin-bottom: 18px;
+}
+
+.edit-profile-container .notification {
+  margin-bottom: 18px;
+  font-size: 16px;
+  border-radius: 8px;
+  text-align: center;
+}

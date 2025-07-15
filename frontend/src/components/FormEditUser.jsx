@@ -5,6 +5,8 @@ import { useNavigate, useParams } from "react-router-dom";
 const FormEditUser = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
+  const [phone, setPhone] = useState("");
+  const [address, setAddress] = useState("");
   const [password, setPassword] = useState("");
   const [confPassword, setConfPassword] = useState("");
   const [role, setRole] = useState("");
@@ -23,6 +25,8 @@ const FormEditUser = () => {
         setRole(response.data.role);
         setRoomType(response.data.roomType || "");
         setRoomPrice(response.data.roomPrice || 0);
+        setPhone(response.data.phone || "");
+        setAddress(response.data.address || "");
       } catch (error) {
         if (error.response) {
           setMsg(error.response.data.message);
@@ -59,11 +63,16 @@ const FormEditUser = () => {
         role,
         roomType,
         roomPrice,
+        phone,
+        address,
       });
-      navigate("/users");
+      setMsg("Perubahan berhasil disimpan!"); // <-- Berhasil
+      setTimeout(() => {
+        navigate("/users");
+      }, 1200); // Redirect setelah 1.2 detik
     } catch (error) {
       if (error.response && error.response.data) {
-        setMsg(error.response.data.message);
+        setMsg(error.response.data.message); // <-- Gagal
       } else {
         setMsg("An error occurred while saving the user.");
       }
@@ -78,8 +87,19 @@ const FormEditUser = () => {
       <div className="card is-shadowless">
         <div className="card-content">
           <div className="content">
+            {msg && (
+              <div
+                className={`notification ${
+                  msg.toLowerCase().includes("berhasil")
+                    ? "is-success"
+                    : "is-danger"
+                }`}
+                style={{ textAlign: "center", fontSize: 16, borderRadius: 8 }}
+              >
+                {msg}
+              </div>
+            )}
             <form onSubmit={updateUser}>
-              <p className="has-text-centered">{msg}</p>
               <div className="field">
                 <label className="label">Name</label>
                 <div className="control">
@@ -101,6 +121,30 @@ const FormEditUser = () => {
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     placeholder="Email"
+                  />
+                </div>
+              </div>
+              <div className="field">
+                <label className="label">No. HP</label>
+                <div className="control">
+                  <input
+                    type="text"
+                    className="input"
+                    value={phone}
+                    onChange={(e) => setPhone(e.target.value)}
+                    placeholder="08xxxxxxxxxx"
+                  />
+                </div>
+              </div>
+              <div className="field">
+                <label className="label">Alamat</label>
+                <div className="control">
+                  <input
+                    type="text"
+                    className="input"
+                    value={address}
+                    onChange={(e) => setAddress(e.target.value)}
+                    placeholder="Alamat lengkap"
                   />
                 </div>
               </div>

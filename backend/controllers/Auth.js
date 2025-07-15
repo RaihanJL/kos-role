@@ -1,5 +1,4 @@
 import User from "../models/UserModel.js";
-import Payments from "../models/PaymentModel.js";
 import argon2 from "argon2";
 
 export const login = async (req, res) => {
@@ -9,6 +8,14 @@ export const login = async (req, res) => {
     },
   });
   if (!user) return res.status(404).json({ message: "User tidak ditemukan" });
+
+  // CEK STATUS SUSPEND
+  if (user.status === "suspend") {
+    return res
+      .status(403)
+      .json({ message: "Akun Anda disuspend. Hubungi admin." });
+  }
+
   const match = await argon2.verify(user.password, req.body.password);
   if (!match) return res.status(400).json({ message: "Password salah" });
 
@@ -17,15 +24,15 @@ export const login = async (req, res) => {
   const name = user.name;
   const email = user.email;
   const role = user.role;
-  const roomType = user.roomType; // tambahkan ini
-  const roomPrice = user.roomPrice; // tambahkan ini
+  const roomType = user.roomType;
+  const roomPrice = user.roomPrice;
   res.status(200).json({
     uuid,
     name,
     email,
     role,
-    roomType, // tambahkan ini
-    roomPrice, // tambahkan ini
+    roomType,
+    roomPrice,
   });
 };
 
@@ -36,7 +43,16 @@ export const Me = async (req, res) => {
       .json({ message: "Anda harus login terlebih dahulu" });
   }
   const user = await User.findOne({
-    attributes: ["uuid", "name", "email", "role", "roomType", "roomPrice"],
+    attributes: [
+      "uuid",
+      "name",
+      "email",
+      "role",
+      "roomType",
+      "roomPrice",
+      "phone", // tambahkan ini
+      "address", // tambahkan ini
+    ],
     where: {
       uuid: req.session.userId,
     },

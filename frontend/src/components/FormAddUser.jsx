@@ -5,28 +5,40 @@ import { useNavigate } from "react-router-dom";
 const FormAddUser = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
+  const [phone, setPhone] = useState("");
+  const [address, setAddress] = useState("");
   const [password, setPassword] = useState("");
   const [confPassword, setConfPassword] = useState("");
   const [role, setRole] = useState("");
   const [roomType, setRoomType] = useState("");
   const [roomPrice, setRoomPrice] = useState(0);
   const [msg, setMsg] = useState("");
+  const [successMsg, setSuccessMsg] = useState(""); // Tambahkan state notifikasi sukses
   const navigate = useNavigate();
 
   const saveUser = async (e) => {
     e.preventDefault();
     setMsg("");
+    setSuccessMsg("");
     try {
-      await axios.post("http://localhost:5000/users", {
+      const data = {
         name,
         email,
         password,
         confPassword,
         role,
-        roomType,
-        roomPrice,
-      });
-      navigate("/users");
+        phone,
+        address,
+        roomType: role === "admin" ? "-" : roomType,
+        roomPrice: role === "admin" ? 0 : roomPrice,
+      };
+      await axios.post("http://localhost:5000/users", data);
+      setSuccessMsg(
+        `Berhasil menambah ${role === "admin" ? "admin" : "user"} baru!`
+      );
+      setTimeout(() => {
+        navigate("/users");
+      }, 1200); // Redirect setelah 1.2 detik
     } catch (error) {
       if (error.response && error.response.data) {
         setMsg(error.response.data.message);
@@ -35,6 +47,7 @@ const FormAddUser = () => {
       }
     }
   };
+
   return (
     <div>
       <h1 className="title">Users</h1>
@@ -43,7 +56,14 @@ const FormAddUser = () => {
         <div className="card-content">
           <div className="content">
             <form onSubmit={saveUser}>
-              <p className="has-text-centered">{msg}</p>
+              <p className="has-text-centered" style={{ color: "red" }}>
+                {msg}
+              </p>
+              {successMsg && (
+                <div className="notification is-success has-text-centered">
+                  {successMsg}
+                </div>
+              )}
               <div className="field">
                 <label className="label">Name</label>
                 <div className="control">
@@ -65,6 +85,30 @@ const FormAddUser = () => {
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     placeholder="Email"
+                  />
+                </div>
+              </div>
+              <div className="field">
+                <label className="label">Nomor HP</label>
+                <div className="control">
+                  <input
+                    type="text"
+                    className="input"
+                    value={phone}
+                    onChange={(e) => setPhone(e.target.value)}
+                    placeholder="08xxxxxxxxxx"
+                  />
+                </div>
+              </div>
+              <div className="field">
+                <label className="label">Alamat</label>
+                <div className="control">
+                  <input
+                    type="text"
+                    className="input"
+                    value={address}
+                    onChange={(e) => setAddress(e.target.value)}
+                    placeholder="Alamat lengkap"
                   />
                 </div>
               </div>
@@ -97,10 +141,9 @@ const FormAddUser = () => {
                 <div className="control">
                   <div className="select is-fullwidth">
                     <select
-                      value={roomType}
+                      value={role === "admin" ? "-" : roomType}
                       onChange={(e) => {
                         setRoomType(e.target.value);
-                        // Otomatis set harga sesuai tipe kamar
                         if (e.target.value === "kecil") setRoomPrice(1600000);
                         else if (e.target.value === "sedang")
                           setRoomPrice(1800000);
@@ -108,6 +151,7 @@ const FormAddUser = () => {
                           setRoomPrice(1900000);
                         else setRoomPrice(0);
                       }}
+                      disabled={role === "admin"}
                     >
                       <option value="">Pilih Tipe Kamar</option>
                       <option value="kecil">Kecil</option>
@@ -121,10 +165,13 @@ const FormAddUser = () => {
                 <label className="label">Harga Kamar</label>
                 <div className="control">
                   <input
-                    type="number"
+                    type="text"
                     className="input"
-                    value={roomPrice}
+                    value={
+                      role === "admin" ? "-" : roomPrice ? `Rp${roomPrice}` : ""
+                    }
                     readOnly
+                    disabled={role === "admin"}
                     placeholder="Harga kamar"
                   />
                 </div>

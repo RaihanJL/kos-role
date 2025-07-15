@@ -4,7 +4,10 @@ import {
   getUserPayments,
   getAllPayments,
   validatePayment,
-  upload
+  getCurrentMonthBill,
+  payMultipleMonths,
+  getUserArrears,
+  upload,
 } from "../controllers/Payment.js";
 import { verifyUser, adminOnly } from "../middleware/AuthUser.js";
 import Payments from "../models/PaymentModel.js";
@@ -15,6 +18,14 @@ router.post("/payments", verifyUser, upload.single("proof"), createPayment);
 router.get("/payments", verifyUser, getUserPayments);
 router.get("/payments/admin", verifyUser, adminOnly, getAllPayments);
 router.patch("/payments/:id", verifyUser, adminOnly, validatePayment);
+router.get("/payments/current-month", verifyUser, getCurrentMonthBill);
+router.get("/payments/arrears", verifyUser, getUserArrears);
+router.post(
+  "/payments/pay-multiple",
+  verifyUser,
+  upload.single("proof"),
+  payMultipleMonths
+);
 router.get("/payments/me", verifyUser, async (req, res) => {
   const status = req.query.status || "pending";
   const payments = await Payments.findAll({
@@ -26,6 +37,5 @@ router.get("/payments/me", verifyUser, async (req, res) => {
   });
   res.json(payments);
 });
-
 
 export default router;

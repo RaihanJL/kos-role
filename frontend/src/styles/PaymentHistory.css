@@ -1,42 +1,101 @@
+body,
+.layout-root {
+  background: var(--background);
+  color: var(--text-main);
+}
+
+.layout-navbar {
+  background: var(--sidebar-bg);
+  border-bottom: 1.5px solid var(--secondary);
+}
+
+.layout-sidebar {
+  background: var(--sidebar-bg);
+  border-right: 1.5px solid var(--secondary);
+}
+
+.menu-label {
+  color: var(--primary);
+}
+
+.menu-list li a.is-flex.active,
+.menu-list li a.is-flex:focus,
+.menu-list li a.is-flex:hover {
+  background: var(--secondary);
+  color: var(--primary);
+}
+
+.tag.is-success {
+  background: var(--success);
+  color: #fff;
+}
+
 .custom-pagination {
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
   list-style: none;
   padding: 0;
   margin: 24px 0 0 0;
   flex-wrap: wrap;
+  gap: 6px;
 }
-.custom-prev, .custom-next {
-  flex: 1 1 0;
-  display: flex;
-  justify-content: center;
-}
-.custom-prev {
-  justify-content: flex-start;
-}
+
+.custom-page,
+.custom-prev,
 .custom-next {
-  justify-content: flex-end;
-}
-.custom-page {
   display: inline-block;
-  margin: 0 4px;
+  list-style: none;
 }
-.is-current a, .is-current {
+
+.custom-prev a,
+.custom-next a {
+  white-space: nowrap;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.custom-page a,
+.custom-prev a,
+.custom-next a {
+  display: inline-block;
+  padding: 6px 14px;
+  border-radius: 6px;
+  background: #f5f7fa;
+  color: #1976d2;
+  font-weight: 600;
+  text-decoration: none;
+  transition: background 0.2s;
+  font-size: 0.95rem;
+}
+
+.custom-page a:hover,
+.custom-prev a:hover,
+.custom-next a:hover {
+  background: #e3eafc;
+}
+
+.is-current a,
+.is-current {
   background: #3273dc;
   color: #fff !important;
   border-radius: 4px;
   padding: 0 8px;
 }
+
 .is-disabled {
   opacity: 0.5;
   pointer-events: none;
 }
+
 @media (max-width: 600px) {
   .custom-pagination {
     font-size: 0.9rem;
   }
 }
+
+/* Print styles tetap */
 .print-table {
   display: none;
 }
@@ -44,36 +103,91 @@
   body * {
     visibility: hidden !important;
   }
+  .print-table,
+  .print-table * {
+    visibility: visible !important;
+  }
   .print-table {
-    visibility: visible !important;
-    display: table !important;
-    width: 100% !important;
-    font-size: 16px !important;
-    margin-top: 0 !important;
-  }
-  .print-table tr {
-    display: table-row !important;
-    visibility: visible !important;
-  }
-  .print-table th, .print-table td {
-    display: table-cell !important;
-    visibility: visible !important;
-    padding: 8px !important;
-    border: 1px solid #000 !important;
-    vertical-align: top !important;
-    text-align: left !important;
-  }
-  .print-signature, .print-signature * {
-    visibility: visible !important;
     display: block !important;
-  }
-  .box {
-    visibility: visible !important;
-    position: static !important;
-    box-shadow: none !important;
+    position: fixed !important;
+    left: 0;
+    right: 0;
+    top: 0;
+    margin-left: auto !important;
+    margin-right: auto !important;
+    width: 90vw !important;
     background: #fff !important;
+    box-shadow: none !important;
+    padding: 0 !important;
+    z-index: 9999;
   }
-  .table, .custom-pagination, .button, .notification, .title, .mb-3 {
-    display: none !important;
+  #root,
+  .box,
+  .payment-history-container {
+    margin: 0 !important;
+    padding: 0 !important;
+    background: #fff !important;
+    box-shadow: none !important;
+    border: none !important;
+    width: 100% !important;
   }
+  .print-footer {
+    display: flex !important;
+    justify-content: space-between !important;
+    align-items: flex-end !important;
+    width: 90vw !important;
+    margin: 32px auto 0 auto !important;
+    padding: 0 24px !important;
+    background: #fff !important;
+    position: static !important;
+    float: none !important;
+  }
+  .print-footer div {
+    visibility: visible !important;
+  }
+}
+
+/* Tambahan untuk PaymentHistory.css agar konsisten modern */
+.proof-img {
+  max-width: 80px;
+  max-height: 80px;
+  width: 100%;
+  height: auto;
+  border-radius: 6px;
+  border: 1px solid var(--border-light);
+  object-fit: cover;
+  background: #fff;
+}
+
+.payment-status-nominal {
+  font-weight: 600;
+  color: var(--primary);
+}
+
+.payment-status-penalty {
+  margin-left: 8px;
+  background: #fff3e0;
+  color: #e65100;
+  border-radius: 8px;
+  padding: 2px 10px;
+  font-weight: 600;
+  font-size: 16px;
+  display: inline-block;
+}
+
+.payment-status-total {
+  color: var(--primary);
+  font-weight: 600;
+  font-size: 15px;
+  margin-top: 2px;
+}
+
+.payment-status-status {
+  font-weight: 700;
+  font-size: 17px;
+  border-radius: 8px;
+  padding: 6px 18px;
+  display: inline-flex;
+  align-items: center;
+  text-transform: capitalize;
 }

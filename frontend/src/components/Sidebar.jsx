@@ -28,16 +28,23 @@ const Sidebar = () => {
           {/* Hanya tampil jika user bukan admin */}
           {user && user.role !== "admin" && (
             <>
+              <p className="menu-label">Payments</p>
               <li>
                 <NavLink to="/payment">
                   <IoPricetag />
-                  Payment
+                  Pembayaran
                 </NavLink>
               </li>
               <li>
                 <NavLink to="/payment-history">
                   <IoPricetag />
-                  Payment History
+                  Riwayat Pembayaran
+                </NavLink>
+              </li>
+              <li>
+                <NavLink to="/status-pembayaran">
+                  <IoPricetag />
+                  Status Pembayaran
                 </NavLink>
               </li>
             </>
@@ -50,7 +57,7 @@ const Sidebar = () => {
               <li>
                 <NavLink to={"/users"}>
                   <IoPerson />
-                  Users
+                  Pengguna kos
                 </NavLink>
               </li>
               <li>
@@ -65,10 +72,23 @@ const Sidebar = () => {
         <p className="menu-label">Settings</p>
         <ul className="menu-list">
           <li>
-            <button onClick={logout} className="button is-white">
+            <NavLink to="/edit-profile">
+              <IoPerson />
+              Profile
+            </NavLink>
+          </li>
+          <li>
+            <a
+              href="#logout"
+              className="logout-link"
+              onClick={(e) => {
+                e.preventDefault();
+                logout();
+              }}
+            >
               <IoLogOut />
-              Logout
-            </button>
+              <span>Keluar</span>
+            </a>
           </li>
         </ul>
       </aside>

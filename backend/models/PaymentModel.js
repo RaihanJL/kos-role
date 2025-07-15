@@ -46,13 +46,16 @@ const Payments = db.define(
     },
     dueDate: {
       type: DataTypes.DATEONLY,
-      allowNull: false,
-      // Anda bisa set defaultValue di controller saat create payment
+      allowNull: true, // ubah dari false ke true
     },
     penalty: {
       type: DataTypes.INTEGER,
       allowNull: true,
       defaultValue: 0,
+    },
+    months: {
+      type: DataTypes.JSON, // <--- Tambahkan ini
+      allowNull: true,
     },
   },
   {
@@ -65,5 +68,7 @@ Payments.belongsTo(User, {
   foreignKey: "userId",
   targetKey: "id",
 });
+User.hasMany(Payments, { foreignKey: "userId", as: "Payments" });
+Payments.belongsTo(User, { foreignKey: "userId", targetKey: "id", as: "User" });
 
 export default Payments;

@@ -1,20 +1,23 @@
 import React from "react";
 import Navbar from "../components/Navbar";
 import Sidebar from "../components/Sidebar";
+import "../styles/layout.css";
 
 const Layout = ({ children }) => {
   return (
-    <React.Fragment>
-      <Navbar />
-      <div className="columns" style={{ minHeight: "100vh" }}>
-        <div className="column is-2">
+    <div className="layout-root">
+      <div className="layout-navbar">
+        <Navbar />
+      </div>
+      <div className="layout-main">
+        <div className="layout-sidebar">
           <Sidebar />
         </div>
-        <div className="column has-background-light">
-          <main>{children}</main>
-        </div>
+        <main className="layout-content">
+          <div className="layout-content-inner">{children}</div>
+        </main>
       </div>
-    </React.Fragment>
+    </div>
   );
 };
 

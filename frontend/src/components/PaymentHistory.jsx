@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import ReactPaginate from "react-paginate";
 import PaymentHistoryPrintTable from "./PaymentHistoryPrintTable";
-import "../styles/PaymentHistory.css"; // Assuming you have a CSS file for styles
+import "../styles/PaymentHistory.css";
 
 const itemsPerPage = 10;
 
@@ -15,9 +15,7 @@ const PaymentHistory = () => {
     const fetchPayments = async () => {
       try {
         const res = await axios.get("http://localhost:5000/payments", {
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem("token")}`,
-          },
+          withCredentials: true, // <-- tambahkan ini
         });
         setPayments(res.data);
       } catch (error) {
@@ -36,8 +34,8 @@ const PaymentHistory = () => {
   const handlePageClick = ({ selected }) => setCurrentPage(selected);
 
   return (
-    <div className="box" style={{ maxWidth: 700, margin: "auto" }}>
-      <h2 className="title is-4">Riwayat Pembayaran</h2>
+    <div className="box payment-history-container">
+      <h2 className="title is-3">Riwayat Pembayaran</h2>
       <button
         className="button is-info mb-3"
         onClick={() => window.print()}
@@ -46,12 +44,12 @@ const PaymentHistory = () => {
         Print Riwayat Pembayaran
       </button>
       {loading ? (
-        <p>Loading...</p>
+        <div className="payment-status-loading">Loading...</div>
       ) : payments.length === 0 ? (
         <p>Belum ada pembayaran.</p>
       ) : (
-        <div style={{ overflowX: "auto" }}>
-          <table className="table is-fullwidth">
+        <div className="payment-status-table-wrapper">
+          <table className="table is-fullwidth modern-status-table">
             <thead>
               <tr>
                 <th>No</th>
@@ -65,7 +63,7 @@ const PaymentHistory = () => {
             <tbody>
               {currentPayments.map((pay, idx) => (
                 <tr key={pay.uuid}>
-                  <td>{offset + idx + 1}</td>
+                  <td>{offset + idx + 1}.</td>
                   <td>
                     {new Date(pay.createdAt).toLocaleDateString("id-ID", {
                       day: "2-digit",
@@ -78,19 +76,56 @@ const PaymentHistory = () => {
                       hour12: true,
                     })}
                   </td>
-                  <td>Rp {pay.amount.toLocaleString()}</td>
-                  <td>{pay.description}</td>
+                  <td>
+                    <span className="payment-status-nominal">
+                      Rp {pay.amount.toLocaleString()}
+                    </span>
+                    {pay.penalty > 0 && (
+                      <>
+                        {" "}
+                        <span className="payment-status-penalty">
+                          + Rp{pay.penalty.toLocaleString()}
+                        </span>
+                        <br />
+                        <span className="payment-status-total">
+                          Total: Rp{(pay.amount + pay.penalty).toLocaleString()}
+                        </span>
+                      </>
+                    )}
+                  </td>
+                  <td>
+                    {pay.description}
+                    {pay.description?.toLowerCase().includes("tunggakan") &&
+                      pay.months &&
+                      Array.isArray(pay.months) &&
+                      pay.months.length > 0 && (
+                        <ul style={{ margin: 0, paddingLeft: 16 }}>
+                          {pay.months.map((due, i) => (
+                            <li key={due}>
+                              {new Date(due).toLocaleString("id-ID", {
+                                month: "long",
+                                year: "numeric",
+                              })}
+                            </li>
+                          ))}
+                        </ul>
+                      )}
+                  </td>
                   <td>
                     <span
                       className={
                         pay.status === "validated"
-                          ? "tag is-success"
+                          ? "tag is-success payment-status-status"
                           : pay.status === "pending"
-                          ? "tag is-warning"
-                          : "tag is-danger"
+                          ? "tag is-warning payment-status-status"
+                          : "tag is-danger payment-status-status"
                       }
                     >
-                      {pay.status}
+                      {pay.status === "validated"
+                        ? "Lunas"
+                        : pay.status === "pending"
+                        ? "Menunggu"
+                        : "Ditolak"}
                     </span>
                   </td>
                   <td>
@@ -103,7 +138,7 @@ const PaymentHistory = () => {
                         <img
                           src={`http://localhost:5000/uploads/${pay.proof}`}
                           alt="Bukti"
-                          style={{ maxWidth: 80, maxHeight: 80 }}
+                          className="proof-img"
                         />
                       </a>
                     ) : (

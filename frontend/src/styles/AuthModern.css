@@ -1,0 +1,24 @@
+.auth-bg {
+  background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+  min-height: 100vh;
+}
+.auth-box {
+  border-radius: 18px;
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.07);
+  padding: 2.5rem 2rem;
+}
+.auth-logo {
+  color: #3273dc;
+}
+input.input:focus,
+.select select:focus {
+  border-color: #3273dc;
+  box-shadow: 0 0 0 0.125em rgba(50, 115, 220, 0.25);
+}
+.button.is-success {
+  background: linear-gradient(90deg, #43cea2 0%, #185a9d 100%);
+  border: none;
+}
+.button.is-success:hover {
+  background: linear-gradient(90deg, #185a9d 0%, #43cea2 100%);
+}

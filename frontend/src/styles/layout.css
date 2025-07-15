@@ -1,0 +1,160 @@
+/* Layout utama */
+body,
+.layout-root {
+  background: var(--background);
+  color: var(--text-main);
+}
+
+.layout-navbar {
+  background: var(--sidebar-bg);
+  border-bottom: 1.5px solid var(--secondary);
+}
+
+.layout-sidebar {
+  background: var(--sidebar-bg);
+  border-right: 1.5px solid var(--secondary);
+}
+
+.menu-label {
+  color: var(--primary);
+}
+
+/* Tambahan agar tombol keluar rapi dan sejajar */
+.logout-link {
+  display: flex;
+  align-items: center;
+  color: var(--danger);
+  font-weight: 600;
+  font-size: 17px;
+  padding: 10px 14px;
+  border-radius: 8px;
+  transition: background 0.15s, color 0.15s;
+  margin-bottom: 4px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  text-decoration: none;
+}
+.logout-link:hover {
+  background: #ffebee;
+  color: var(--danger);
+}
+
+.menu-list li a.is-flex.active,
+.menu-list li a.is-flex:focus,
+.menu-list li a.is-flex:hover {
+  background: var(--secondary);
+  color: var(--primary);
+}
+
+.tag.is-success {
+  background: var(--success);
+  color: #fff;
+}
+
+.layout-root {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background: #f9fbfd;
+}
+
+/* Navbar sticky */
+.layout-navbar {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  background: #fff;
+  min-height: 56px;
+  border-bottom: 1px solid #e3e7ef;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
+}
+
+/* Kontainer isi (sidebar + konten) */
+.layout-main {
+  flex: 1;
+  display: flex;
+  min-height: 0;
+}
+
+/* Sidebar sticky */
+.layout-sidebar {
+  width: 230px;
+  background: #fff;
+  border-right: 1px solid #e3e7ef;
+  box-shadow: 2px 0 8px rgba(0, 0, 0, 0.03);
+  z-index: 2;
+  position: sticky;
+  top: 0;
+  height: calc(100vh - 56px);
+  min-height: 0;
+  overflow-y: auto;
+  padding: 24px 0 24px 8px;
+}
+
+/* Konten tengah scroll */
+.layout-content {
+  flex: 1;
+  overflow-y: auto;
+  padding: 32px 0 0 0;
+  min-height: 0;
+  background: #f9fbfd;
+}
+
+.layout-content-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+/* Navbar brand logo */
+.layout-navbar .navbar-brand .navbar-item img {
+  height: 32px;
+  width: auto;
+}
+
+/* Sidebar menu label */
+.menu-label {
+  font-size: 15px;
+  color: #1976d2;
+}
+
+/* Sidebar menu-list li a */
+.menu-list li a.is-flex {
+  align-items: center;
+  font-size: 16px;
+  padding: 8px 12px;
+  border-radius: 6px;
+  transition: background 0.15s;
+}
+.menu-list li a.is-flex.active,
+.menu-list li a.is-flex:focus,
+.menu-list li a.is-flex:hover {
+  background: #e3f2fd;
+  color: #1976d2;
+  font-weight: 600;
+}
+
+/* Sidebar tombol keluar */
+.menu-list li .button.is-white {
+  color: #d32f2f;
+  font-weight: 600;
+  background: none;
+  border: none;
+  box-shadow: none;
+  padding-left: 0;
+  padding-right: 0;
+}
+.menu-list li .button.is-white:hover {
+  background: #ffebee;
+}
+
+/* Responsive: sidebar collapse on mobile */
+@media (max-width: 900px) {
+  .layout-sidebar {
+    display: none;
+  }
+  .layout-content-inner {
+    padding: 0 8px;
+  }
+}
