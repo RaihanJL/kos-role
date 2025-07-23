@@ -51,13 +51,15 @@ app.use(express.static("public"));
 app.use(UserRoute);
 app.use(AuthRoute);
 app.use(PaymentRoute);
-app.use(AdminRoute)
+app.use(AdminRoute);
 app.use(rulesRoute);
 // store.sync();
 
 cron.schedule("0 0 1 * *", createMonthlyBills);
 // createMonthlyBills();
 
-app.listen(process.env.APP_PORT, () => {
-  console.log(`Server is running...`);
-});
+// app.listen(process.env.APP_PORT, () => {
+//   console.log(`Server is running...`);
+// });
+
+export default app;
