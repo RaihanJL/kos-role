@@ -40,6 +40,7 @@ export const RegisterUser = createAsyncThunk(
         confPassword: user.confPassword,
         roomType: user.roomType,
         roomPrice: user.roomPrice,
+        roomNumber: user.roomNumber, // <-- TAMBAHKAN INI!
       });
       return response.data;
     } catch (error) {

@@ -97,6 +97,7 @@ const Userlist = () => {
                 <th>Email</th>
                 <th>No. HP</th>
                 <th>Alamat</th>
+                <th>Nomor Kamar</th>
                 <th>Tipe Kamar</th>
                 <th>Harga Kamar</th>
                 <th>Status</th>
@@ -152,6 +153,15 @@ const Userlist = () => {
                           ? user.address.slice(0, 18) + "..."
                           : user.address
                         : "-"}
+                    </span>
+                  </td>
+                  <td>
+                    <span className="tag is-primary is-light is-rounded big-cell">
+                      <i
+                        className="fas fa-door-closed"
+                        style={{ marginRight: 5 }}
+                      />
+                      {user.roomNumber || "-"}
                     </span>
                   </td>
                   <td>

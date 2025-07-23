@@ -65,7 +65,9 @@ const StatusPembayaranBulanan = () => {
 
   return (
     <div className="box payment-status-container">
-      <h2 className="title is-3 payment-status-title">
+      <h2 style={{
+        color: "rgb(25, 118, 210)", marginBottom: 16
+      }} className="title is-3 payment-status-title">
         Status Pembayaran Bulanan
       </h2>
       <div style={{ marginBottom: 24 }}>

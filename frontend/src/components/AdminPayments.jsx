@@ -163,6 +163,7 @@ const AdminPayments = () => {
                   <th>Tanggal</th>
                   <th>User</th>
                   <th>Email</th>
+                  <th>Kamar</th>
                   <th>Tipe Kamar</th>
                   <th>Nominal</th>
                   <th>Keterangan</th>
@@ -225,6 +226,7 @@ const AdminPayments = () => {
                   <th>Tanggal</th>
                   <th>User</th>
                   <th>Email</th>
+                  <th>Kamar</th>
                   <th>Tipe Kamar</th>
                   <th>Nominal</th>
                   <th>Keterangan</th>

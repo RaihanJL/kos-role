@@ -272,7 +272,7 @@ const AdminDashboard = ({ user, summary, pendingPayments, recentUsers }) => {
                 {recentUsers.map((u) => (
                   <tr key={u.id}>
                     <td>{u.name}</td>
-                    <td>{u.roomName || "-"}</td>
+                    <td>{u.roomNumber || "-"}</td>
                     <td>{u.roomType || "-"}</td>
                     <td>
                       {u.roomPrice ? `Rp${u.roomPrice.toLocaleString()}` : "-"}

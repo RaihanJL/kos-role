@@ -76,9 +76,14 @@ export const createPayment = async (req, res) => {
 // User melihat riwayat pembayaran miliknya
 export const getUserPayments = async (req, res) => {
   try {
-    // Cari pembayaran berdasarkan id angka (FK)
     const payments = await Payments.findAll({
       where: { userId: req.userId },
+      include: [
+        {
+          model: User,
+          attributes: ["roomNumber"], // tambahkan field lain jika perlu
+        },
+      ],
       order: [["createdAt", "DESC"]],
     });
     res.json(payments);
@@ -92,7 +97,10 @@ export const getAllPayments = async (req, res) => {
   try {
     const payments = await Payments.findAll({
       include: [
-        { model: User, attributes: ["name", "email", "roomType", "roomPrice"] },
+        {
+          model: User,
+          attributes: ["name", "email", "roomType", "roomPrice", "roomNumber"],
+        },
       ],
       order: [["createdAt", "DESC"]],
     });

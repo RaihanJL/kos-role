@@ -3,6 +3,7 @@ import axios from "axios";
 import ReactPaginate from "react-paginate";
 import PaymentHistoryPrintTable from "./PaymentHistoryPrintTable";
 import "../styles/PaymentHistory.css";
+import { useSelector } from "react-redux";
 
 const itemsPerPage = 10;
 
@@ -10,6 +11,7 @@ const PaymentHistory = () => {
   const [payments, setPayments] = useState([]);
   const [loading, setLoading] = useState(true);
   const [currentPage, setCurrentPage] = useState(0);
+  const { user } = useSelector((state) => state.auth);
 
   useEffect(() => {
     const fetchPayments = async () => {
@@ -35,7 +37,15 @@ const PaymentHistory = () => {
 
   return (
     <div className="box payment-history-container">
-      <h2 className="title is-3">Riwayat Pembayaran</h2>
+      <h2
+        style={{
+          color: "rgb(25, 118, 210)",
+          marginBottom: 16,
+        }}
+        className="title is-3"
+      >
+        Riwayat Pembayaran
+      </h2>
       <button
         className="button is-info mb-3"
         onClick={() => window.print()}
@@ -54,6 +64,8 @@ const PaymentHistory = () => {
               <tr>
                 <th>No</th>
                 <th>Tanggal</th>
+                <th>Kamar</th>
+                <th>Tipe Kamar</th>
                 <th>Nominal</th>
                 <th>Keterangan</th>
                 <th>Status</th>
@@ -76,13 +88,18 @@ const PaymentHistory = () => {
                       hour12: true,
                     })}
                   </td>
+                  <td className="payment-history-room">
+                    {pay.User?.roomNumber || user?.roomNumber || "-"}
+                  </td>
+                  <td className="payment-history-roomtype">
+                    {pay.User?.roomType || user?.roomType || "-"}
+                  </td>
                   <td>
                     <span className="payment-status-nominal">
                       Rp {pay.amount.toLocaleString()}
                     </span>
                     {pay.penalty > 0 && (
                       <>
-                        {" "}
                         <span className="payment-status-penalty">
                           + Rp{pay.penalty.toLocaleString()}
                         </span>
@@ -100,7 +117,7 @@ const PaymentHistory = () => {
                       Array.isArray(pay.months) &&
                       pay.months.length > 0 && (
                         <ul style={{ margin: 0, paddingLeft: 16 }}>
-                          {pay.months.map((due, i) => (
+                          {pay.months.map((due) => (
                             <li key={due}>
                               {new Date(due).toLocaleString("id-ID", {
                                 month: "long",

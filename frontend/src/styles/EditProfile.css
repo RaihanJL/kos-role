@@ -1,5 +1,5 @@
 .edit-profile-outer {
-  height: calc(90vh - 64px); /* 64px = tinggi navbar */
+  height: calc(90vh - 64px); 
   min-height: unset;
   display: flex;
   align-items: center;

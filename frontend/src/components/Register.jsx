@@ -13,6 +13,7 @@ const Register = () => {
   const [confPassword, setConfPassword] = useState("");
   const [roomType, setRoomType] = useState("");
   const [roomPrice, setRoomPrice] = useState("");
+  const [roomNumber, setRoomNumber] = useState("");
   const [showSuccess, setShowSuccess] = useState(false);
 
   const dispatch = useDispatch();
@@ -43,6 +44,37 @@ const Register = () => {
 
   const handleRegister = (e) => {
     e.preventDefault();
+    if (name.trim().length < 3) {
+      alert("Nama minimal 3 karakter");
+      return;
+    }
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+      alert("Masukkan email yang valid");
+      return;
+    }
+    if (!/^\d{10,}$/.test(phone)) {
+      alert("Nomor handphone minimal 10 digit angka");
+      return;
+    }
+
+    if (address.trim().length < 8) {
+      alert("Alamat minimal 8 karakter");
+      return;
+    }
+    if (password.length < 6) {
+      alert("Password minimal 6 karakter");
+      return;
+    }
+   
+    if (!roomNumber || roomNumber < 1 || roomNumber > 7) {
+      alert("Nomor kamar wajib diisi (1-7)");
+      return;
+    }
+    if (!roomNumber || roomNumber < 1 || roomNumber > 7) {
+      alert("Nomor kamar wajib diisi (1-7)");
+      return;
+    }
     dispatch(
       RegisterUser({
         name,
@@ -53,6 +85,7 @@ const Register = () => {
         confPassword,
         roomType,
         roomPrice: Number(roomPrice),
+        roomNumber,
       })
     );
   };
@@ -217,6 +250,31 @@ const Register = () => {
                       </div>
                     </div>
                   )}
+                  <div className="field">
+                    <label className="label">Nomor Kamar</label>
+                    <div className="control">
+                      <div className="select is-fullwidth">
+                        <select
+                          value={roomNumber}
+                          onChange={(e) =>
+                            setRoomNumber(Number(e.target.value))
+                          }
+                          required
+                        >
+                          <option value={0}>Pilih Nomor Kamar</option>
+                          {[1, 2, 3, 4, 5, 6, 7].map((num) => (
+                            <option key={num} value={num}>
+                              Kamar {num}
+                            </option>
+                          ))}
+                        </select>
+                      </div>
+                      <p className="help is-info mt-1">
+                        Pilih nomor kamar (1-7). Jika sudah dipakai user lain,
+                        Anda akan mendapat peringatan.
+                      </p>
+                    </div>
+                  </div>
                   <div className="field mt-5">
                     <button
                       type="submit"

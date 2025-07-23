@@ -1,38 +1,134 @@
 body,
 .layout-root {
-  background: var(--background);
-  color: var(--text-main);
-}
-
-.layout-navbar {
-  background: var(--sidebar-bg);
-  border-bottom: 1.5px solid var(--secondary);
+  background: #f9fbfd;
+  color: #232b36;
 }
 
 .layout-sidebar {
-  background: var(--sidebar-bg);
-  border-right: 1.5px solid var(--secondary);
+  background: #f5f8fd;
+  border-right: 1.5px solid #e3e7ef;
 }
 
 .menu-label {
-  color: var(--primary);
+  color: #1976d2;
+  font-weight: 700;
+  letter-spacing: 1px;
+  font-size: 15px;
 }
 
-.menu-list li a.is-flex.active,
-.menu-list li a.is-flex:focus,
-.menu-list li a.is-flex:hover {
-  background: var(--secondary);
-  color: var(--primary);
+.menu-list li a.active,
+.menu-list li a:focus,
+.menu-list li a:hover {
+  background: #e3f2fd;
+  color: #1976d2;
+  font-weight: 600;
 }
 
 .tag.is-success {
-  background: var(--success);
+  background: #43a047;
   color: #fff;
+}
+
+.payment-history-container {
+  background: #fff;
+  border-radius: 16px;
+  box-shadow: 0 2px 12px #b3c2e022;
+  padding: 32px 20px 24px 20px;
+  margin-top: 24px;
+}
+
+.payment-status-table-wrapper {
+  overflow-x: auto;
+  margin-bottom: 18px;
+  border-radius: 12px;
+  background: #f9fbfd;
+  box-shadow: 0 2px 12px #b3c2e022;
+}
+
+/* Table style */
+.modern-status-table {
+  border-radius: 10px;
+  overflow: hidden;
+  background: #fff;
+  min-width: 700px;
+  box-shadow: 0 2px 8px #b3c2e022;
+}
+
+.modern-status-table th,
+.modern-status-table td {
+  padding: 12px 14px;
+  font-size: 15px;
+  border: none;
+}
+
+.modern-status-table th {
+  background: #e3f2fd;
+  color: #1976d2;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+}
+
+.modern-status-table td {
+  background: #fff;
+  color: #232b36;
+  vertical-align: middle;
+}
+
+.payment-history-room {
+  font-weight: 600;
+  color: #1976d2;
+  text-align: center;
+  letter-spacing: 1px;
+}
+
+.payment-status-nominal {
+  color: #1976d2;
+  font-weight: 600;
+}
+
+.payment-status-penalty {
+  color: #d90429;
+  font-weight: 600;
+  background: #fff3e0;
+  border-radius: 8px;
+  padding: 2px 10px;
+  font-size: 15px;
+  margin-left: 8px;
+  display: inline-block;
+}
+
+.payment-status-total {
+  color: #1976d2;
+  font-weight: 700;
+  font-size: 15px;
+  margin-top: 2px;
+}
+
+.payment-status-status {
+  font-weight: 700;
+  font-size: 17px;
+  border-radius: 8px;
+  padding: 6px 18px;
+  display: inline-flex;
+  align-items: center;
+  text-transform: capitalize;
+}
+
+.proof-img {
+  max-width: 80px;
+  max-height: 80px;
+  width: 100%;
+  height: auto;
+  border-radius: 6px;
+  border: 1px solid #e3e7ef;
+  object-fit: cover;
+  background: #fff;
+  box-shadow: 0 2px 8px #0001;
 }
 
 .custom-pagination {
   display: flex;
-  justify-content: center;
+  justify-content: flex-end;
   align-items: center;
   list-style: none;
   padding: 0;
@@ -90,9 +186,37 @@ body,
 }
 
 @media (max-width: 600px) {
+  .modern-status-table th,
+  .modern-status-table td {
+    font-size: 13px;
+    padding: 8px 6px;
+  }
+  .payment-history-container {
+    padding: 10px 2px 8px 2px;
+  }
+  .modern-status-table {
+    min-width: 600px;
+  }
+  .proof-img {
+    max-width: 40px;
+    max-height: 40px;
+  }
   .custom-pagination {
     font-size: 0.9rem;
   }
+}
+
+.modern-status-table tbody tr:hover {
+  background: #f5f8fd;
+  transition: background 0.2s;
+}
+
+/* Table border radius on top */
+.modern-status-table thead th:first-child {
+  border-top-left-radius: 10px;
+}
+.modern-status-table thead th:last-child {
+  border-top-right-radius: 10px;
 }
 
 /* Print styles tetap */
@@ -145,49 +269,4 @@ body,
   .print-footer div {
     visibility: visible !important;
   }
-}
-
-/* Tambahan untuk PaymentHistory.css agar konsisten modern */
-.proof-img {
-  max-width: 80px;
-  max-height: 80px;
-  width: 100%;
-  height: auto;
-  border-radius: 6px;
-  border: 1px solid var(--border-light);
-  object-fit: cover;
-  background: #fff;
-}
-
-.payment-status-nominal {
-  font-weight: 600;
-  color: var(--primary);
-}
-
-.payment-status-penalty {
-  margin-left: 8px;
-  background: #fff3e0;
-  color: #e65100;
-  border-radius: 8px;
-  padding: 2px 10px;
-  font-weight: 600;
-  font-size: 16px;
-  display: inline-block;
-}
-
-.payment-status-total {
-  color: var(--primary);
-  font-weight: 600;
-  font-size: 15px;
-  margin-top: 2px;
-}
-
-.payment-status-status {
-  font-weight: 700;
-  font-size: 17px;
-  border-radius: 8px;
-  padding: 6px 18px;
-  display: inline-flex;
-  align-items: center;
-  text-transform: capitalize;
 }

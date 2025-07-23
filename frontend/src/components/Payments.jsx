@@ -24,16 +24,9 @@ const Payments = () => {
 
   const rekeningAdmin = {
     bank: "BCA",
-    nomor: "1234567890",
+    nomor: "5211957647",
     nama: "Admin Kos",
   };
-
-  const keperluanPembayaran = [
-    "Uang sewa kamar",
-    "Biaya listrik & air",
-    "Iuran kebersihan",
-    "Denda (jika ada tunggakan)",
-  ];
 
   useEffect(() => {
     axios
@@ -116,9 +109,7 @@ const Payments = () => {
     <div className="payments-container">
       {/* Sisi kiri: Tunggakan */}
       <div className="payments-arrears">
-        <h3 style={{ fontWeight: 700, fontSize: 20, marginBottom: 8 }}>
-          Tunggakan
-        </h3>
+        <h3 className="title">Tunggakan</h3>
         {arrears && arrears.hasArrears ? (
           <>
             <div
@@ -150,9 +141,34 @@ const Payments = () => {
 
       {/* Sisi kanan: Form pembayaran */}
       <div className="payments-form">
-        <h3 style={{ fontWeight: 700, fontSize: 20, marginBottom: 8 }}>
-          Form Pembayaran
-        </h3>
+        <div
+          style={{
+            marginBottom: 12,
+            background: "#f5f8fd",
+            color: "#1976d2",
+            borderRadius: 8,
+            padding: "10px 16px",
+            fontWeight: 600,
+            fontSize: 16,
+            border: "1px solid #e3e7ef",
+            display: "flex",
+            flexDirection: "column",
+            gap: 2,
+            alignItems: "flex-start",
+            minWidth: 180,
+            maxWidth: 260,
+          }}
+        >
+          <span>
+            Nomor Kamar:{" "}
+            <span style={{ color: "#1976d2" }}>{user?.roomNumber || "-"}</span>
+          </span>
+          <span>
+            Tipe Kamar:{" "}
+            <span style={{ color: "#1976d2" }}>{user?.roomType || "-"}</span>
+          </span>
+        </div>
+        <h3 className="title">Form Pembayaran</h3>
 
         {/* Info rekening admin */}
         <div
@@ -173,24 +189,6 @@ const Payments = () => {
             <br />
             <b>Atas Nama:</b> {rekeningAdmin.nama}
           </span>
-        </div>
-
-        {/* Daftar keperluan pembayaran */}
-        <div
-          className="notification"
-          style={{
-            marginBottom: 16,
-            background: "#fffde7",
-            color: "#795548",
-            border: "1px solid #ffe082",
-          }}
-        >
-          <b>Keperluan pembayaran:</b>
-          <ul style={{ marginTop: 6, marginBottom: 0, paddingLeft: 18 }}>
-            {keperluanPembayaran.map((item, idx) => (
-              <li key={idx}>{item}</li>
-            ))}
-          </ul>
         </div>
 
         <div style={{ marginBottom: 16 }}>

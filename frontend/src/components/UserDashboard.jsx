@@ -25,7 +25,7 @@ const UserDashboard = ({ user, status, arrears, lastPayments }) => (
           Info Kamar
         </div>
         <div>
-          <b>Kamar:</b> {user?.roomName || "-"}
+          <b>Kamar:</b> {user?.roomNumber || "-"}
           <br />
           <b>Tipe:</b> {user?.roomType || "-"}
           <br />

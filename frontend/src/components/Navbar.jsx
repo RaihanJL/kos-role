@@ -10,23 +10,63 @@ const Navbar = () => {
   return (
     <div>
       <nav
-        className="navbar is fixed top has-shadow"
+        className="navbar is-fixed-top has-shadow"
         role="navigation"
         aria-label="main navigation"
+        style={{
+          background: "#fff",
+          borderBottom: "1.5px solid #e3e7ef",
+          minHeight: 56,
+          zIndex: 100,
+        }}
       >
-        <div className="navbar-brand">
-          {/* Tombol menu sidebar hanya tampil di mobile */}
+        <div
+          className="navbar-brand"
+          style={{
+            width: "100%",
+            justifyContent: "center",
+            position: "relative",
+            display: "flex",
+            alignItems: "center",
+          }}
+        >
+          {/* Burger di kiri, absolute agar tidak dorong logo */}
           <button
             className="button is-white is-hidden-tablet sidebar-menu-btn"
             onClick={() => setSidebarOpen(true)}
             aria-label="Open sidebar"
+            style={{
+              position: "absolute",
+              left: 0,
+              top: "50%",
+              transform: "translateY(-50%)",
+              zIndex: 2,
+            }}
           >
             <span className="icon">
               <i className="fas fa-bars"></i>
             </span>
           </button>
-          <NavLink to="/dashboard" className="navbar-item">
-            <img src={logo} width="112" height="28" alt="Logo" />
+          {/* Logo selalu di tengah */}
+          <NavLink
+            to="/dashboard"
+            className="navbar-item"
+            style={{ margin: "0 auto" }}
+          >
+            <figure className="image is-160x64" style={{ margin: 0 }}>
+              <img
+                src={logo}
+                alt="Logo"
+                style={{
+                  objectFit: "contain",
+                  height: 48,
+                  maxWidth: "100%",
+                  width: "auto",
+                  transition: "height 0.2s",
+                }}
+                className="navbar-logo-img"
+              />
+            </figure>
           </NavLink>
         </div>
       </nav>

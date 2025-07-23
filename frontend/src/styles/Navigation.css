@@ -10,8 +10,8 @@
   display: flex;
 }
 .sidebar-drawer {
-  width: 260px;
-  max-width: 80vw;
+  width: 280px; /* Lebar sidebar lebih pas */
+  max-width: 90vw;
   background: #fff;
   height: 100%;
   box-shadow: 2px 0 8px #0001;
@@ -19,7 +19,37 @@
   position: relative;
   display: flex;
   flex-direction: column;
+  padding: 0; /* Hapus padding di sini, biar header dan isi atur sendiri */
 }
+
+.sidebar-drawer-header {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  padding: 16px 16px 0 16px; /* Konsisten dengan isi sidebar */
+  min-height: 48px;
+}
+
+.sidebar-drawer-close {
+  font-size: 1.5rem;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #232b36;
+  padding: 0;
+  margin: 0;
+}
+
+.navbar-logo-img {
+  height: 48px;
+  max-width: 100%;
+}
+@media (max-width: 600px) {
+  .navbar-logo-img {
+    height: 32px;
+  }
+}
+
 @keyframes slideInLeft {
   from {
     transform: translateX(-100%);
@@ -28,14 +58,7 @@
     transform: translateX(0);
   }
 }
-.sidebar-drawer-header {
-  display: flex;
-  justify-content: flex-end;
-  padding: 8px 8px 0 8px;
-}
-.sidebar-drawer-close {
-  font-size: 1.5rem;
-}
+
 @media (min-width: 769px) {
   .sidebar-drawer-overlay,
   .sidebar-drawer {
@@ -45,4 +68,3 @@
     display: none !important;
   }
 }
-

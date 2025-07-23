@@ -98,6 +98,7 @@ const Login = () => {
                   </div>
                   <div className="has-text-centered mt-4">
                     <span>Belum punya akun? </span>
+
                     <a
                       href="#"
                       onClick={(e) => {
@@ -107,6 +108,18 @@ const Login = () => {
                       className="has-text-link"
                     >
                       Daftar di sini
+                    </a>
+                  </div>
+                  <div className="has-text-centered mt-2">
+                    <a
+                      href="#"
+                      className="has-text-link"
+                      onClick={(e) => {
+                        e.preventDefault();
+                        navigate("/forgot-password");
+                      }}
+                    >
+                      Lupa Password ?
                     </a>
                   </div>
                 </form>

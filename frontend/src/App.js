@@ -11,6 +11,8 @@ import AdminPaymentsPage from "./pages/AdminPaymentsPage";
 import Register from "./components/Register";
 import PaymentStatus from "./pages/PaymentStatus";
 import EditProfilePage from "./pages/EditProfilePage";
+import ForgotPassword from "./components/ForgotPassword";
+import ResetPassword from "./components/ResetPassword";
 import "./styles/colors.css";
 
 function App() {
@@ -51,6 +53,8 @@ function App() {
           <Route path="/admin/payments" element={<AdminPaymentsPage />} />
           <Route path="/status-pembayaran" element={<PaymentStatus />} />
           <Route path="/edit-profile" element={<EditProfilePage />} />
+          <Route path="/forgot-password" element={<ForgotPassword />} />
+          <Route path="/reset-password/:token" element={<ResetPassword />} />
         </Routes>
       </BrowserRouter>
     </div>

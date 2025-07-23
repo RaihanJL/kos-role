@@ -17,6 +17,7 @@ const PaymentRow = ({ pay, onValidate, no, showAction }) => (
     </td>
     <td>{pay.user?.name}</td>
     <td>{pay.user?.email}</td>
+    <td>{pay.user?.roomNumber || "-"}</td>
     <td>{pay.user?.roomType || "-"}</td>
     <td>
       <span>

@@ -14,8 +14,9 @@ export const getUsers = async (req, res) => {
         "roomType",
         "roomPrice",
         "status",
-        "phone", // tambahkan ini
-        "address", // tambahkan ini
+        "phone",
+        "address",
+        "roomNumber",
       ],
     });
     res.json(users);
@@ -35,8 +36,9 @@ export const getUserById = async (req, res) => {
         "roomType",
         "roomPrice",
         "status",
-        "phone", // tambahkan ini
-        "address", // tambahkan ini
+        "phone",
+        "address",
+        "roomNumber",
       ],
       where: { uuid: req.params.id },
     });
@@ -60,9 +62,29 @@ export const createUser = async (req, res) => {
     confPassword,
     roomType,
     roomPrice,
+    roomNumber,
   } = req.body;
   if (!name || !email || !phone || !address || !password || !confPassword) {
     return res.status(400).json({ message: "Semua field wajib diisi" });
+  }
+
+  if (name.trim().length < 3) {
+    return res.status(400).json({ message: "Nama minimal 3 karakter" });
+  }
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  if (!emailRegex.test(email)) {
+    return res.status(400).json({ message: "Masukkan email yang valid" });
+  }
+  if (!/^\d{10,}$/.test(phone)) {
+    return res
+      .status(400)
+      .json({ message: "Nomor handphone minimal 10 digit angka" });
+  }
+  if (address.trim().length < 8) {
+    return res.status(400).json({ message: "Alamat minimal 8 karakter" });
+  }
+  if (password.length < 6) {
+    return res.status(400).json({ message: "Password minimal 6 karakter" });
   }
 
   // === CEK EMAIL SUDAH TERDAFTAR ===
@@ -72,6 +94,19 @@ export const createUser = async (req, res) => {
   }
   // === END CEK EMAIL ===
 
+  // === CEK NOMOR KAMAR ===
+  if (!roomNumber || isNaN(roomNumber) || roomNumber < 1 || roomNumber > 7) {
+    return res.status(400).json({ message: "Nomor kamar wajib diisi (1-7)" });
+  }
+  const existingRoom = await User.findOne({ where: { roomNumber } });
+  if (existingRoom) {
+    return res.status(400).json({
+      message:
+        "Nomor kamar sudah dipilih oleh user lain. Silakan pilih nomor kamar lain yang masih tersedia.",
+    });
+  }
+  // === END CEK NOMOR KAMAR ===
+
   // Validasi khusus user
   if (req.body.role !== "admin") {
     if (
@@ -80,7 +115,7 @@ export const createUser = async (req, res) => {
       roomPrice === undefined ||
       roomPrice === null ||
       roomPrice === "" ||
-      Number(roomPrice) < 1000 // atau sesuai minimal harga kamar Anda
+      Number(roomPrice) < 1000
     ) {
       return res
         .status(400)
@@ -105,6 +140,7 @@ export const createUser = async (req, res) => {
       roomPrice: req.body.role === "admin" ? 0 : roomPrice,
       role: req.body.role || "user",
       status: "aktif",
+      roomNumber,
     });
 
     if (newUser.role === "user") {
@@ -149,7 +185,7 @@ export const updateUser = async (req, res) => {
   const { name, email, password, confPassword, role } = req.body;
   let hashPassword;
   if (password === "" || password === null) {
-    hashPassword = user.password; 
+    hashPassword = user.password;
   } else {
     hashPassword = await argon2.hash(password);
   }
@@ -166,7 +202,7 @@ export const updateUser = async (req, res) => {
         role: role,
         roomType: req.body.roomType,
         roomPrice: req.body.roomPrice,
-        phone: req.body.phone, 
+        phone: req.body.phone,
         address: req.body.address,
       },
       {
